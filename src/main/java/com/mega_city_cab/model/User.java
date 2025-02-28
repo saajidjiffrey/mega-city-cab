@@ -7,7 +7,7 @@ public class User {
 	private String NIC;
 	private String phone;
 	private String email;
-	private String username;
+	private String userName;
 	private String password;
 	private String role;
 	
@@ -15,7 +15,7 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(int userId, String name, String address, String NIC, String phone, String email, String username, String password, String role) {
+	public User(int userId, String name, String address, String NIC, String phone, String email, String userName, String password, String role) {
 		super();
 		this.userId = userId;
 		this.name = name;
@@ -23,7 +23,7 @@ public class User {
 		this.NIC = NIC;
 		this.phone = phone;
 		this.email = email;
-		this.username = username;
+		this.userName = userName;
 		this.password = password;
 		this.role = role;
 	}
@@ -76,12 +76,12 @@ public class User {
 		this.email = email;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {
