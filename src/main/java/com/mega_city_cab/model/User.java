@@ -10,12 +10,20 @@ public class User {
 	private String userName;
 	private String password;
 	private String role;
-	
-	public User() {
-		// TODO Auto-generated constructor stub
-	}
 
-	public User(int userId, String name, String address, String NIC, String phone, String email, String userName, String password, String role) {
+	public User( String name, String address, String NIC, String phone, String email, String userName, String password, String role) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.NIC = NIC;
+		this.phone = phone;
+		this.email = email;
+		this.userName = userName;
+		this.password = password;
+		this.role = role;
+	}
+	
+	public User( int userId, String name, String address, String NIC, String phone, String email, String userName, String password, String role) {
 		super();
 		this.userId = userId;
 		this.name = name;

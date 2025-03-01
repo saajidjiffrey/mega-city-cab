@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import com.mega_city_cab.model.User;
 
@@ -13,7 +14,7 @@ public class UserDAO {
 		
 		try {
 			Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query);
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			
 			statement.setString(1, user.getName());
 			statement.setString(2, user.getAddress());
@@ -22,12 +23,11 @@ public class UserDAO {
 			statement.setString(5, user.getEmail());
 			statement.setString(6, user.getUserName());
 			statement.setString(7, user.getPassword());
-			statement.setString(1, user.getRole());
+			statement.setString(8, user.getRole());
 			
 			statement.executeUpdate();
 			
 			// below implementation retrieves auto generated primary key(userId) for user, after inserting a new user
-			
 			ResultSet rs = statement.getGeneratedKeys();		//fetches the generated key from database
 			if (rs.next()) {		//checks if there is a generated key
                 user.setUserId(rs.getInt(1));		//retrieves the first column which is (userId) and set it to the USER object to use it later.

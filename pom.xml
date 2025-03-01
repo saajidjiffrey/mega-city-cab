@@ -51,6 +51,16 @@
 	    <artifactId>webjars-locator-core</artifactId>
 	    <version>0.47</version>
 	</dependency>
+	<dependency> <!-- To hash passwords -->
+	    <groupId>org.mindrot</groupId>
+	    <artifactId>jbcrypt</artifactId>
+	    <version>0.4</version>
+	</dependency>
+	<dependency> <!-- Mainly using this to show the results as objects in the console during testing -->
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-databind</artifactId>
+	    <version>2.15.0</version>
+	</dependency>
   </dependencies>
   <build>
     <finalName>mega-city-cab</finalName>
