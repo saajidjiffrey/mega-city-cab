@@ -13,10 +13,9 @@ public class CustomerDAO {
 		new UserDAO().addUser(customer);
 		String query = "INSERT INTO Customer (userId) VALUES (?)"; //setting the foreign key
 		
-		try {
-			Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			
+		try (Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) 
+		{	
 			statement.setInt(1, customer.getUserId()); 
 			statement.executeUpdate();	
 			

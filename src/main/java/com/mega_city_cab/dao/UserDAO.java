@@ -12,10 +12,9 @@ public class UserDAO {
 	public void addUser (User user) {
 		String query = "INSERT INTO User (name, address,  NIC, phone, email, userName, password, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		
-		try {
-			Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			
+		try (Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) 
+		{	
 			statement.setString(1, user.getName());
 			statement.setString(2, user.getAddress());
 			statement.setString(3, user.getNIC());
@@ -41,10 +40,9 @@ public class UserDAO {
 	public User getUserByUserName (String userName) {
 		String query = "SELECT * FROM User WHERE userName = ?	";
 		
-		try {
-			Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query);
-			
+		try (Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query))
+		{	
 			statement.setString(1, userName);
 			ResultSet rs = statement.executeQuery();
 			

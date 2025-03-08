@@ -13,10 +13,9 @@ public class DriverDAO {
 		new UserDAO().addUser(driver);
 		String query = "INSERT INTO Driver (userId, licenseNo) VALUES (?, ?)"; //setting the foreign key and the license no
 		
-		try {
-			Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			
+		try (Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) 
+		{	
 			statement.setInt(1, driver.getUserId()); 
 			statement.setString(2, driver.getLicenseNo()); 
 			statement.executeUpdate();	

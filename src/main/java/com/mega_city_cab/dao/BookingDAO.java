@@ -43,10 +43,9 @@ public class BookingDAO {
 	public boolean updateBookingStatus (int bookingId, String status) throws SQLException {
 		String query = "UPDATE Booking SET status = ? WHERE bookingId = ?"; 
 		
-		try {
-			Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query);
-			
+		try (Connection connection = DBConnectionFactory.getConnection();
+				PreparedStatement statement = connection.prepareStatement(query);) 
+		{
 			statement.setString(1, status );
 			statement.setInt(2, bookingId);
 			int rowsAffected = statement.executeUpdate();
@@ -66,10 +65,9 @@ public class BookingDAO {
 	public void deleteBooking (int bookingId) throws SQLException  {
 		String query = "DELETE FROM Booking WHERE bookingId = ?"; 
 		
-		try {
-			Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query);
-			
+		try (Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query)) 
+		{
 			statement.setInt(1, bookingId);
 			int rowsAffected = statement.executeUpdate();
 
@@ -86,9 +84,9 @@ public class BookingDAO {
         String query = "SELECT * FROM Booking WHERE bookingId = ?";
         Booking booking;
         
-        try {
-        	Connection connection = DBConnectionFactory.getConnection();
-        	PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = DBConnectionFactory.getConnection();
+        	PreparedStatement statement = connection.prepareStatement(query)) 
+        {	
         	statement.setInt(1,bookingId );            
             ResultSet resultSet = statement.executeQuery();
             
@@ -115,10 +113,10 @@ public class BookingDAO {
         List<Booking> bookings = new ArrayList<>();
         String query = "SELECT * FROM Booking";
 
-        try {
-        	Connection connection = DBConnectionFactory.getConnection();
+        try (Connection connection = DBConnectionFactory.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(query)) 
+        {
             while (resultSet.next()) 
             {
             	int bookingId = resultSet.getInt("bookingId");
@@ -142,9 +140,9 @@ public class BookingDAO {
         List<Booking> bookings = new ArrayList<>();
         String query = "SELECT * FROM Booking WHERE customerId = ?";
 
-        try {
-        	Connection connection = DBConnectionFactory.getConnection();
-        	PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = DBConnectionFactory.getConnection();
+        	PreparedStatement statement = connection.prepareStatement(query)) 
+        {	
         	statement.setInt(1,customerId );            
             ResultSet resultSet = statement.executeQuery();
             
@@ -170,9 +168,9 @@ public class BookingDAO {
         List<Booking> bookings = new ArrayList<>();
         String query = "SELECT * FROM Booking WHERE driverId = ?";
 
-        try {
-        	Connection connection = DBConnectionFactory.getConnection();
-        	PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = DBConnectionFactory.getConnection();
+        	PreparedStatement statement = connection.prepareStatement(query))
+        {	
         	statement.setInt(1,driverId );            
             ResultSet resultSet = statement.executeQuery();
             
@@ -198,9 +196,9 @@ public class BookingDAO {
         List<Booking> bookings = new ArrayList<>();
         String query = "SELECT * FROM Booking WHERE status = ?";
 
-        try {
-        	Connection connection = DBConnectionFactory.getConnection();
-        	PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = DBConnectionFactory.getConnection();
+        	PreparedStatement statement = connection.prepareStatement(query)) 
+        {	
         	statement.setString(1,status );            
             ResultSet resultSet = statement.executeQuery();
             
@@ -226,9 +224,9 @@ public class BookingDAO {
         List<Booking> bookings = new ArrayList<>();
         String query = "SELECT * FROM Booking WHERE status IN (?, ?)";
 
-        try {
-        	Connection connection = DBConnectionFactory.getConnection();
-        	PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = DBConnectionFactory.getConnection();
+        	PreparedStatement statement = connection.prepareStatement(query)) 
+        {	
         	statement.setString(1,status1 );     
         	statement.setString(2,status2 );        
             ResultSet resultSet = statement.executeQuery();
