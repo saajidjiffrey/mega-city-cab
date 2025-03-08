@@ -16,10 +16,9 @@ public class BookingDAO {
 	public Booking addBooking (Booking booking) {
 		String query = "INSERT INTO Booking (pickupLocation, destination, bookingDatetime, status, customerId) VALUES (? ,? ,? ,? ,? )"; 
 		
-		try {
-			Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			
+		try (Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) 
+		{		
 			statement.setString(1, booking.getPickupLocation() );
 			statement.setString(2, booking.getDestination());
 			statement.setTimestamp(3, Timestamp.valueOf(booking.getBookingDatetime()) );

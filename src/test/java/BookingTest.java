@@ -54,7 +54,7 @@
 		
 		@Test
 		public void deleteBooking() throws JsonProcessingException {
-			int bookingId = 8;
+			int bookingId = 5;
 			try {
 		        bookingService.deleteBooking(bookingId);
 			} catch (Exception e) {
