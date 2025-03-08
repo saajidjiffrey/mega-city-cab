@@ -1,4 +1,5 @@
 package com.mega_city_cab.service;
+import com.mega_city_cab.exception.AuthenticationException;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -24,11 +25,22 @@ public class AuthenticationService {
 		return instance;
 	}
 	
-	public User authenticate(String userName, String password) {
-        User user = userDAO.getUserByUserName(userName);
-        if (user != null && BCrypt.checkpw(password, user.getPassword())) { //use this if you dont want to check hashed password "  user.getPassword().equals(password) "
-            return user;
-        }
-        return null;
+	public User userLogin(String userName, String password) throws AuthenticationException {
+		try {
+			User user = userDAO.getUserByUserName(userName);
+
+			if (user == null) {
+				throw new AuthenticationException("User not found");
+			}
+			
+			if (!BCrypt.checkpw(password, user.getPassword())) { //use this if you dont want to check hashed password "  user.getPassword().equals(password) "
+				throw new AuthenticationException("Invalid credentials");
+			}
+			
+			return user;
+			
+		} catch (Exception e) {
+			throw  new AuthenticationException(e.getMessage());
+		}
     }
 }
