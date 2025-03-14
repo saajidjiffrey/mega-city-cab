@@ -27,17 +27,21 @@ public class BookingService {
 	}
 	
 	//use DTOs
-	public Booking createBooking(String pickupLocation, String destination, LocalDateTime bookingDatetime, int customerId) {
-		String status = "booked";
-		Booking newBooking = new Booking(pickupLocation, destination, bookingDatetime, status, customerId);
-		return bookingDAO.addBooking(newBooking);
+	public Booking createBooking(String pickupLocation, String destination, LocalDateTime bookingDatetime, int customerId, String pickupLat, String pickupLng, String destinationLat, String destinationLng, double estimatedTime, double distance, int vehicleId) throws Exception {
+		try {
+			String status = "booked";
+			Booking newBooking = new Booking(pickupLocation, destination, bookingDatetime, status, customerId, pickupLat, pickupLng, destinationLat, destinationLng, estimatedTime, distance, vehicleId);
+			return  bookingDAO.addBooking(newBooking);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage(), e);
+		}
 	}
 	
 	public boolean updateBookingStatus(int bookingId, String status) throws Exception {
 		try {
 			return bookingDAO.updateBookingStatus(bookingId, status);
 		} catch (Exception e) {
-			throw e;
+			throw new Exception(e.getMessage(), e);
 		}
 	}
 	
@@ -92,6 +96,15 @@ public class BookingService {
 	public List<Booking> getAllBookingsByStatus(String status1, String status2) throws SQLException {
 		try {
 			return bookingDAO.getAllBookingsByStatus(status1, status2);
+		} catch (Exception e) {
+			throw e;
+		}
+    }
+	
+	public List<Booking> getAllCompletedBookings() throws SQLException {
+		try {
+			System.out.println("service");
+			return bookingDAO.getAllCompletedBookings();
 		} catch (Exception e) {
 			throw e;
 		}

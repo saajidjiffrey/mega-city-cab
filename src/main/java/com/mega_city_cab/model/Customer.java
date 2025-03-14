@@ -10,11 +10,20 @@ public class Customer extends User{
 		this.customerId = customerId;
 	}	
 	
+	public Customer( int userId, String name, String address, String NIC, String phone, String email, String userName, String password, String role, int customerId) {
+		super(	userId, name, address, NIC, phone, email, userName, password,role);
+		this.customerId = customerId;
+	}	
+	
 	// Constructor for new customer (No userId initially)
-	public Customer( String name, String address, String NIC, String phone, String email, String userName, String password) {
-		super( name, address, NIC, phone, email, userName, password, "CUSTOMER");
+	public Customer( String name, String address, String NIC, String phone, String email, String userName, String password, String role) {
+		super( name, address, NIC, phone, email, userName, password, role);
 	}
-
+	
+	public Customer() {
+	    super();
+	}
+	
 	public int getCustomerId() {
 		return customerId;
 	}

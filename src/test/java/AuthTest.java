@@ -20,16 +20,15 @@ public class AuthTest {
 
 	@Test
 	public void userLogin() throws JsonProcessingException{
-        String userName = "saajid146";
-        String password = "Saajid1234!";
+        String userName = "saajidDriver";
+        String password = "password";
         
 		try {
 			User loggedUser = authService.userLogin(userName, password);
 			String json = objectMapper.writeValueAsString(loggedUser);
 	        System.out.println(json);
 		} catch (AuthenticationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
     }
 }

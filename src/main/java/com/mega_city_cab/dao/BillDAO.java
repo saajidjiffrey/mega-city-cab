@@ -15,11 +15,13 @@ import com.mega_city_cab.model.Order;
 
 public class BillDAO {
 	public Bill addBill (Bill bill) {
-		String query = "INSERT INTO Bill (totalAmount, tax, discount, finalAmount, paymentStatus, orderId) VALUES (,? ,? ,? ,?, ?, ?)"; 
+		String query = "INSERT INTO Bill (totalAmount, tax, discount, finalAmount, paymentStatus, orderId) VALUES (? ,? ,? ,?, ?, ?)"; 
 		
-		try (Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) 
-		{		
+		try
+		{	
+			Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+					
 			statement.setDouble(1, bill.getTotalAmount());
 			statement.setDouble(2, bill.getTax());
 			statement.setDouble(3, bill.getDiscount());
@@ -44,9 +46,11 @@ public class BillDAO {
 	public boolean updateBillPaymementStatus (int billId, String status) throws SQLException {
 		String query = "UPDATE Bill SET paymentStatus = ? WHERE billId = ?"; 
 		
-		try (Connection connection = DBConnectionFactory.getConnection();
-				PreparedStatement statement = connection.prepareStatement(query);) 
+		try
 		{
+			Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query);
+			
 			statement.setString(1, status );
 			statement.setInt(2, billId);
 			int rowsAffected = statement.executeUpdate();
@@ -66,9 +70,11 @@ public class BillDAO {
 	public void deleteBill (int billId) throws SQLException  {
 		String query = "DELETE FROM Bill WHERE billId = ?"; 
 		
-		try (Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query)) 
+		try 
 		{
+			Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query);
+					
 			statement.setInt(1, billId);
 			int rowsAffected = statement.executeUpdate();
 
@@ -85,9 +91,11 @@ public class BillDAO {
         String query = "SELECT * FROM Bill WHERE billId = ?";
         Bill bill;
         
-        try (Connection connection = DBConnectionFactory.getConnection();
-        	PreparedStatement statement = connection.prepareStatement(query)) 
+        try 
         {	
+        	Connection connection = DBConnectionFactory.getConnection();
+        	PreparedStatement statement = connection.prepareStatement(query);
+        			
         	statement.setInt(1,billId );            
             ResultSet resultSet = statement.executeQuery();
             
@@ -115,10 +123,12 @@ public class BillDAO {
         List<Bill> bills = new ArrayList<>();
         String query = "SELECT * FROM Bill";
 
-        try (Connection connection = DBConnectionFactory.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query)) 
+        try 
         {
+        	Connection connection = DBConnectionFactory.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            
             while (resultSet.next()) 
             {
             	int billId = resultSet.getInt("billId");

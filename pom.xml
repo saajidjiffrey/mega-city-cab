@@ -7,6 +7,11 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>mega-city-cab Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
   <dependencies>
     <dependency>
 			<groupId>javax.servlet</groupId>
@@ -59,7 +64,18 @@
 	<dependency> <!-- Mainly using this to show the results as objects in the console during testing -->
 	    <groupId>com.fasterxml.jackson.core</groupId>
 	    <artifactId>jackson-databind</artifactId>
-	    <version>2.15.0</version>
+	    <version>2.16.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-core</artifactId>
+	    <version>2.16.1</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-annotations</artifactId>
+	    <version>2.16.1</version>
 	</dependency>
 	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
 	<dependency> <!-- Using this to show dates in JSON testing output LocalDateTime doesnt suports-->

@@ -12,10 +12,20 @@ public class Driver extends User{
 		this.licenseNo = licenseNo;
 	}
 	
-	// Constructor for new customer (No userId initially)
-	public Driver(String name, String address, String NIC, String phone, String email, String userName, String password, String licenseNo) {
-		super(name, address, NIC, phone, email, userName, password, "DRIVER");
+	public Driver(int userId, String name, String address, String NIC, String phone, String email, String userName, String password,String role, int driverId, String licenseNo) {
+		super(userId, name, address, NIC, phone, email, userName, password, role);
+		this.driverId = driverId;
 		this.licenseNo = licenseNo;
+	}
+	
+	// Constructor for new customer (No userId initially)
+	public Driver(String name, String address, String NIC, String phone, String email, String userName, String password, String licenseNo, String role) {
+		super(name, address, NIC, phone, email, userName, password, role);
+		this.licenseNo = licenseNo;
+	}
+	
+	public Driver() {
+	    super();
 	}
 
 	public int getDriverId() {

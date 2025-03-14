@@ -35,6 +35,10 @@ public class Order {
 		this.distance = distance;
 		this.fareAmount = fareAmount;
 	}
+	
+	public Order() {
+
+	}
 
 	public int getOrderId() {
 		return orderId;
