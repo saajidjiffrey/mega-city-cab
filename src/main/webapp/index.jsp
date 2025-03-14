@@ -4,7 +4,7 @@
 	<header
 		class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom">
 		<div class="col-md-3 mb-2 mb-md-0">
-			<a href="/"
+			<a href="index.jsp" 
 				class="d-inline-flex link-body-emphasis text-decoration-none align-items-center"> 
 				<img alt="logo" src="common/images/logo.png" class="me-2" style="width: 64px;">
 				<h3 class="text-primary">Mega City Cab</h3>
@@ -80,64 +80,26 @@
 
 <div class="container marketing">
 
-	<!-- Three columns of text below the carousel -->
 	<div class="row">
-    <!-- Column 1: Affordable Rides -->
     <div class="col-lg-4">
-        <svg class="bd-placeholder-img rounded-circle" width="140"
-            height="140" xmlns="http://www.w3.org/2000/svg" role="img"
-            aria-label="Affordable Rides" preserveAspectRatio="xMidYMid slice"
-            focusable="false">
-            <title>Affordable Rides</title>
-            <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-        </svg>
+		<img alt="logo" src="common/images/home1.jpg" style="width:180px; height: 180px; border-radius: 120px;">
         <h2 class="fw-normal">Affordable Rides</h2>
         <p>Enjoy budget-friendly fares without compromising on comfort and safety. Get the best value for your trips across the city.</p>
-        <p>
-            <a class="btn btn-secondary" href="#">View Pricing »</a>
-        </p>
     </div>
-    <!-- /.col-lg-4 -->
 
-    <!-- Column 2: Fast & Reliable Service -->
     <div class="col-lg-4">
-        <svg class="bd-placeholder-img rounded-circle" width="140"
-            height="140" xmlns="http://www.w3.org/2000/svg" role="img"
-            aria-label="Fast & Reliable" preserveAspectRatio="xMidYMid slice"
-            focusable="false">
-            <title>Fast & Reliable</title>
-            <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-        </svg>
+        <img alt="logo" src="common/images/home2.jpg" style="width:180px; height: 180px; border-radius: 120px;">
         <h2 class="fw-normal">Fast & Reliable</h2>
         <p>Book a cab instantly and reach your destination on time. Our drivers ensure a smooth and efficient ride every time.</p>
-        <p>
-            <a class="btn btn-secondary" href="#">Book Now »</a>
-        </p>
     </div>
-    <!-- /.col-lg-4 -->
 
-    <!-- Column 3: Safety First -->
     <div class="col-lg-4">
-        <svg class="bd-placeholder-img rounded-circle" width="140"
-            height="140" xmlns="http://www.w3.org/2000/svg" role="img"
-            aria-label="Safety First" preserveAspectRatio="xMidYMid slice"
-            focusable="false">
-            <title>Safety First</title>
-            <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-        </svg>
+        <img alt="logo" src="common/images/home3.jpg" style="width:180px; height: 180px; border-radius: 120px;">
         <h2 class="fw-normal">Safety First</h2>
         <p>Your safety is our priority. Our cabs are sanitized regularly, and our drivers are well-trained and verified.</p>
-        <p>
-            <a class="btn btn-secondary" href="#">Learn More »</a>
-        </p>
     </div>
-    <!-- /.col-lg-4 -->
 </div>
 
-	<!-- /.row -->
-
-
-	<!-- START THE FEATURETTES -->
 
 	<hr class="featurette-divider">
 
@@ -151,21 +113,14 @@
         </p>
     </div>
     <div class="col-md-5 order-md-1">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            width="500" height="500" xmlns="http://www.w3.org/2000/svg"
-            role="img" aria-label="Fast & Reliable"
-            preserveAspectRatio="xMidYMid slice" focusable="false">
-            <title>Fast & Reliable</title>
-            <rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect>
-            <text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-        </svg>
+	<img alt="logo" src="common/images/home4.jpg" class="w-100 object-fit-cover " style="height: 500px;">
     </div>
 </div>
 
 
 	<hr class="featurette-divider">
 
-	<<div class="row featurette">
+	<div class="row featurette">
     <div class="col-md-7 order-md-2">
         <h2 class="featurette-heading fw-normal lh-1">
             Ride in Comfort. <span class="text-body-secondary">Luxury at Every Mile.</span>
@@ -175,14 +130,7 @@
         </p>
     </div>
     <div class="col-md-5 order-md-1">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            width="500" height="500" xmlns="http://www.w3.org/2000/svg"
-            role="img" aria-label="Comfort Ride"
-            preserveAspectRatio="xMidYMid slice" focusable="false">
-            <title>Comfort Ride</title>
-            <rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect>
-            <text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-        </svg>
+        <img alt="logo" src="common/images/home5.jpg" class="w-100 object-fit-cover" style="height: 500px;">
     </div>
 </div>
 
@@ -198,21 +146,13 @@
         </p>
     </div>
     <div class="col-md-5">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            width="500" height="500" xmlns="http://www.w3.org/2000/svg"
-            role="img" aria-label="Safety First"
-            preserveAspectRatio="xMidYMid slice" focusable="false">
-            <title>Safety First</title>
-            <rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect>
-            <text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-        </svg>
+        <img alt="logo" src="common/images/home6.jpg" class="w-100 object-fit-cover" style="height: 500px;">
     </div>
 </div>
 
 
 	<hr class="featurette-divider">
 
-	<!-- /END THE FEATURETTES -->
 
 </div>
 <!--  -->

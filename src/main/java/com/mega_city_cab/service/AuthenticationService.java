@@ -5,9 +5,11 @@ import java.sql.SQLException;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.mega_city_cab.dao.AdminDAO;
 import com.mega_city_cab.dao.CustomerDAO;
 import com.mega_city_cab.dao.DriverDAO;
 import com.mega_city_cab.dao.UserDAO;
+import com.mega_city_cab.model.Admin;
 import com.mega_city_cab.model.Customer;
 import com.mega_city_cab.model.Driver;
 import com.mega_city_cab.model.User;
@@ -17,11 +19,13 @@ public class AuthenticationService {
 	private UserDAO userDAO;
 	private CustomerDAO customerDAO;
 	private DriverDAO driverDAO;
+	private AdminDAO adminDAO;
 	
 	public AuthenticationService() {
 		this.userDAO = new UserDAO();
 		this.customerDAO = new CustomerDAO(); 
 		this.driverDAO = new DriverDAO();
+		this.adminDAO = new AdminDAO();
 	}
 	
 	public static AuthenticationService getInstance() {
@@ -40,11 +44,11 @@ public class AuthenticationService {
 	        User user = userDAO.getUserByUserName(userName);
 
 	        if (user == null) {
-	            throw new AuthenticationException("User not found");
+	            throw new Exception("User not found");
 	        }
 
 	        if (!BCrypt.checkpw(password, user.getPassword())) {
-	            throw new AuthenticationException("Invalid username or password");
+	            throw new Exception("Invalid username or password");
 	        }
 
 	        // Identify whether user is a Customer or a Driver and get the respective ID
@@ -57,6 +61,11 @@ public class AuthenticationService {
 	            Driver driver = driverDAO.getDriverByUserId(user.getUserId()); 
 	            if (driver != null) {
 	                return driver; 
+	            }
+	        } else if ("ADMIN".equalsIgnoreCase(user.getRole())) {
+	            Admin admin = adminDAO.getAdminByID(user.getUserId()); 
+	            if (admin != null) {
+	                return admin; 
 	            }
 	        }
 

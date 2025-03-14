@@ -1,7 +1,6 @@
 package com.mega_city_cab.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mega_city_cab.exception.AuthenticationException;
+import com.mega_city_cab.model.Admin;
 import com.mega_city_cab.model.Customer;
 import com.mega_city_cab.model.Driver;
 import com.mega_city_cab.model.User;
@@ -70,10 +69,12 @@ public class UserController extends HttpServlet {
         } else if (action.equals("userLogin")) {
         	try {
 				userLogin(request, response);
-			} catch (ServletException | IOException | AuthenticationException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+        } else if (action.equals("userLogout")) {
+        	userLogout(request, response);
         }
 	}
 	
@@ -93,7 +94,6 @@ public class UserController extends HttpServlet {
 	        String userName = request.getParameter("cUserName");
 	        String password = request.getParameter("cPassword");
 	        
-	        // Create Customer object
 	        Customer customer = new Customer();
 	        customer.setName(name);
 	        customer.setAddress(address);
@@ -103,23 +103,18 @@ public class UserController extends HttpServlet {
 	        customer.setUserName(userName);
 	        customer.setPassword(password);
 
-	        // Register customer
 	        Customer createdCustomer = customerService.registerCustomer(customer);
 	        
-	        // Store user details in session
 	        HttpSession session = request.getSession();
 	        session.setAttribute("loggedInUser", createdCustomer.getCustomerId());
 	        session.setAttribute("userType",createdCustomer.getRole());
 	        session.setAttribute("customerId", createdCustomer.getCustomerId());
 
-	     // Prepare a JSON response
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");
 	        
-	        // Send a success response back to the client
 	        String jsonResponse = "{\"success\": true, \"message\": \"Signed up successfully!.\"}";
 	        response.getWriter().write(jsonResponse);
-	        // Redirect if successful
 //	        request.getRequestDispatcher("pages/customerDashboard.jsp").forward(request, response);
 
 	    } catch (Exception e) {
@@ -189,14 +184,13 @@ public class UserController extends HttpServlet {
         request.getRequestDispatcher("pages/login.jsp").forward(request, response);
     }
 	
-	private void userLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, AuthenticationException {
+	private void userLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    try {
-	    	String userName = request.getParameter("userName");
-		    String password = request.getParameter("password");
-		    
+	        String userName = request.getParameter("userName");
+	        String password = request.getParameter("password");
+
 	        User user = authenticationService.userLogin(userName, password);
 
-	        // Set user details in session
 	        HttpSession session = request.getSession();
 	        session.setAttribute("loggedInUser", user);
 	        session.setAttribute("userType", user.getRole());
@@ -207,34 +201,55 @@ public class UserController extends HttpServlet {
 	        } else if (user instanceof Driver) {
 	            Driver driver = (Driver) user;
 	            session.setAttribute("driverId", driver.getDriverId());
+	        } else if (user instanceof Admin) {
+	        	Admin admin = (Admin) user;
+	            session.setAttribute("adminId", admin.getAdminId());
 	        }
-	        
+
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");
-	       
-	        // Redirect based on role
-	        if ("CUSTOMER".equalsIgnoreCase(user.getRole())) {
-		        String jsonResponse = "{\"success\": true, \"message\": \"Logged In successfully!.C\"}";
-		        response.getWriter().write(jsonResponse);
-	        } else if ("DRIVER".equalsIgnoreCase(user.getRole())) {
-		        String jsonResponse = "{\"success\": true, \"message\": \"Logged In successfully!.D\"}";
-		        response.getWriter().write(jsonResponse);
-	        } else {
-	            session.invalidate();
-	            request.getRequestDispatcher("pages/login.jsp").forward(request, response);
-	        }
 
+	        String jsonResponse = String.format(
+	            "{\"success\": true, \"message\": \"Logged In successfully!\", \"role\": \"%s\"}",
+	            user.getRole()
+	        );
+	        response.getWriter().write(jsonResponse);
+	        response.getWriter().flush();
 
 	    } catch (Exception e) {
-	        System.out.println(e.getMessage());
-	        
+	        e.printStackTrace();
+
 	        response.setContentType("application/json");
-	        response.setCharacterEncoding("UTF-8");	 
-	        
-	        String errorResponse = "{\"success\": false, \"message\": \"Failes to signup.!\"}";
+	        response.setCharacterEncoding("UTF-8");
+
+	        String errorResponse = "{\"success\": false, \"message\": \"Failed to log in. Please try again!\"}";
 	        response.getWriter().write(errorResponse);
-	        
-	        request.getRequestDispatcher("pages/login.jsp").forward(request, response);
+	        response.getWriter().flush();
 	    }
-    }
+	}
+
+	
+	private void userLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+
+	    try {
+	        HttpSession session = request.getSession(false);
+	        if (session != null) {
+	            session.invalidate(); 
+	        }
+	        
+	        response.getWriter().write("{\"success\": true, \"message\": \"Logged out successfully!\"}");
+	        response.getWriter().flush();  
+	        System.out.println("logout");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.getWriter().write("{\"success\": false, \"message\": \"Logout failed! Please try again.\"}");
+	        response.getWriter().flush();
+	    } finally {
+	        response.getWriter().close();  
+	    }
+	}
+
+
 }

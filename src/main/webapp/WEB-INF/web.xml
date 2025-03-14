@@ -28,6 +28,18 @@
   	<description></description>
   	<servlet-class>com.mega_city_cab.controller.DriverController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>OrderController</servlet-name>
+  	<display-name>OrderController</display-name>
+  	<description></description>
+  	<servlet-class>com.mega_city_cab.controller.OrderController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AdminController</servlet-name>
+  	<display-name>AdminController</display-name>
+  	<description></description>
+  	<servlet-class>com.mega_city_cab.controller.AdminController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>UserController</servlet-name>
   	<url-pattern>/User</url-pattern>
@@ -43,5 +55,13 @@
   <servlet-mapping>
   	<servlet-name>DriverController</servlet-name>
   	<url-pattern>/Driver</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>OrderController</servlet-name>
+  	<url-pattern>/Order</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AdminController</servlet-name>
+  	<url-pattern>/Admin</url-pattern>
   </servlet-mapping>
 </web-app>

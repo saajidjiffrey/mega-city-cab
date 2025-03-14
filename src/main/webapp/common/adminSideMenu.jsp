@@ -61,10 +61,10 @@
 
 <div id="sidebar-wrapper">
 	<ul class="sidebar-nav">
-		<li><a href="driver?action=showDriverDashboard">Dashboard</a></li>
-		<li><a href="driver?action=showDriverAvailableRides">Available Rides</a></li>
-		<li><a href="driver?action=showDriverMyRides">My Rides</a></li>
-		<li><a href="driver?action=showDriverOrders">Completed Orders</a></li>
+<!-- 		<li><a href="driver?action=showDriverDashboard">Dashboard</a></li> -->
+<!-- 		<li><a href="driver?action=showDriverAvailableRides">Available Rides</a></li> -->
+<!-- 		<li><a href="driver?action=showDriverMyRides">My Rides</a></li> -->
+<!-- 		<li><a href="driver?action=showDriverOrders">Completed Orders</a></li> -->
 		<li><a href="#" onclick="logout() ">Logout</a></li>
 	</ul>
 </div>

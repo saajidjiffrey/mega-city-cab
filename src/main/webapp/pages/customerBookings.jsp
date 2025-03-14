@@ -3,10 +3,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ include file="/common/header.jsp"%>
+<style>
+.card {
+	border-radius: 0.5rem;
+}
+
+.table-hover tbody tr:hover {
+	background-color: #f1f1f1;
+}
+
+.badge {
+	font-size: 0.9rem;
+	padding: 0.5rem;
+}
+
+.btn-delete {
+	font-size: 1rem;
+	padding: 0.5rem 1rem;
+}
+</style>
 <!--  -->
 
 <div id="wrapper">
-	<!-- 	sidemenu -->
+	<!-- Side menu -->
 	<%@ include file="/common/customerSideMenu.jsp"%>
 	<%@ include file="/common/messageContainer.jsp"%>
 
@@ -16,13 +35,18 @@
 			<div>
 				<a href="#" class="btn" id="menu-toggle"><i class="bi bi-list"></i></a>
 			</div>
-			<div class="container mx-auto ">
-				<h1 class="my-3">Your Bookings</h1>
 
-				<div class="card">
+			<div class="container mx-auto mt-4">
+				<h1 class="my-4 text-center text-primary">My Bookings</h1>
+
+				<div class="card shadow-sm border-light">
+					<div class="card-header bg-primary text-white">
+						<h5 class="mb-0">Booking Details</h5>
+					</div>
+
 					<div class="card-body">
 						<table class="table table-striped table-hover">
-							<thead>
+							<thead class="thead-dark">
 								<tr>
 									<th scope="col">Booking Date Time</th>
 									<th scope="col">Pickup Location</th>
@@ -30,8 +54,7 @@
 									<th scope="col">Estimated Travel Time</th>
 									<th scope="col">Distance</th>
 									<th scope="col">Booking Status</th>
-									<th scope="col-2">Action
-									<th>
+									<th scope="col">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -41,7 +64,7 @@
 										<th scope="row">${booking.bookingDatetime}</th>
 										<td>${booking.pickupLocation}</td>
 										<td>${booking.destination}</td>
-										<td>${booking.estimatedTime}mins.</td>
+										<td>${booking.estimatedTime}mins</td>
 										<td>${booking.distance}km</td>
 										<c:choose>
 											<c:when test="${booking.status eq 'booked'}">
@@ -67,7 +90,7 @@
 												<button type="button"
 													class="btn btn-outline-danger btn-delete"
 													booking-id="${booking.bookingId}">
-													<i class="bi bi-trash3"></i>
+													<i class="bi bi-trash3"></i> Delete
 												</button>
 											</c:if></td>
 									</tr>
@@ -81,13 +104,13 @@
 		</div>
 	</div>
 </div>
+
 <!--  -->
 <%@ include file="/common/footer.jsp"%>
 
 <script src="js/map.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    // Select all delete buttons
     document.querySelectorAll(".btn-delete").forEach(button => {
         button.addEventListener("click", function () {
             let bookingId = this.getAttribute("booking-id");
@@ -99,12 +122,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             console.log("Deleting booking with ID:", bookingId);
 
-            // Prepare data for request
             let urlEncodedData = new URLSearchParams();
             urlEncodedData.append("bookingId", bookingId);
 
-            // Send DELETE request using Fetch API
-            fetch("customer?action=deleteBooking", {
+            fetch("booking?action=deleteBooking", {
                 method: "POST", 
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: urlEncodedData.toString()
@@ -112,7 +133,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {                    
-                    //  remove the deleted booking row from the table
                     this.closest("tr").remove();
                     
                     showToast("Booking Deleted Successfully!", "bg-success");

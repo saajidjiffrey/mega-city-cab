@@ -1,6 +1,3 @@
-/**
- * This script is used to validate forms
- */
 
 (function () {
     'use strict';

@@ -1,7 +1,6 @@
 
 <style>
 
-/* Sidebar */
 #sidebar-wrapper {
 	z-index: 1;
 	position: absolute;
@@ -15,7 +14,6 @@
 	align-items: center;
 }
 
-/* Main Content */
 #page-content-wrapper {
 	width: 100%;
 	position: absolute;
@@ -27,7 +25,6 @@
 	transition: all .3s;
 	font-size: 2em;
 }
-/* Change the width of the sidebar to display it*/
 #wrapper.menuDisplayed #sidebar-wrapper {
 	width: 250px;
 }
@@ -36,7 +33,6 @@
 	padding-left: 250px;
 }
 
-/* Sidebar styling */
 .sidebar-nav {
 	padding: 0;
 	list-style: none;
@@ -63,12 +59,41 @@
 }
 </style>
 
-<!-- Sidebar -->
 <div id="sidebar-wrapper">
 	<ul class="sidebar-nav">
 		<li><a href="customer?action=showCustomerDashboard">Book a Ride</a></li>
 		<li><a href="customer?action=showCustomerBookings">My Bookings</a></li>
 		<li><a href="customer?action=showCustomerOrders">Completed Orders</a></li>
-		<li><a href="#">Logout</a></li>
+		<li><a href="#" onclick="logout() ">Logout</a></li>
 	</ul>
 </div>
+
+<script>
+function logout() {
+    fetch('user?action=userLogout', {
+        method: 'POST',
+        headers: { 'Cache-Control': 'no-cache' } 
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.json(); 
+    })
+    .then(data => {
+        console.log("Logout Response:", data);
+        if (data.success) {
+            window.location.href = "user?action=login"; 
+        } else {
+            showToast(data.message, "bg-danger");
+        }
+    })
+    .catch(error => {
+        console.error("Logout Error:", error);
+        showToast("An error occurred while logging out.", "bg-danger");
+    });
+}
+
+
+
+</script>

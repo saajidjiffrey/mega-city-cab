@@ -51,13 +51,13 @@ public class CustomerController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false); 
-	    String userType = (String) session.getAttribute("userType");
-
-	    if (userType == null || !userType.equals("CUSTOMER")) {
-	        response.sendRedirect("pages/login.jsp?error=Unauthorized access");
-	        return;
-	    }
+//		HttpSession session = request.getSession(false); 
+//	    String userType = (String) session.getAttribute("userType");
+//
+//	    if (userType == null || !userType.equals("CUSTOMER")) {
+//	        response.sendRedirect("pages/login.jsp?error=Unauthorized access");
+//	        return;
+//	    }
 	    
 		String action = request.getParameter("action");
         if (action.equals("showCustomerDashboard")) {
@@ -96,9 +96,12 @@ public class CustomerController extends HttpServlet {
     }
 	
 	private void createBooking(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		try {
-	    	String pickupLocation = request.getParameter("pickupLocation");
+	    HttpSession session = request.getSession();
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+
+	    try {
+	        String pickupLocation = request.getParameter("pickupLocation");
 	        String destination = request.getParameter("destination");
 	        String bookingDatetimeStr = request.getParameter("bookingDatetime");
 	        int customerId = (int) session.getAttribute("customerId");
@@ -110,37 +113,37 @@ public class CustomerController extends HttpServlet {
 	        String distanceStr = request.getParameter("distance");
 	        String vehicleIdStr = request.getParameter("vehicleType");
 
-	        LocalDateTime bookingDatetime = null;
-	        if (bookingDatetimeStr != null && !bookingDatetimeStr.isEmpty()) {
-	            bookingDatetime = LocalDateTime.parse(bookingDatetimeStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-	        }
+	        LocalDateTime bookingDatetime = (bookingDatetimeStr != null && !bookingDatetimeStr.isEmpty()) 
+	            ? LocalDateTime.parse(bookingDatetimeStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME) 
+	            : null;
+
 	        double estimatedTime = (estimatedTimeStr != null && !estimatedTimeStr.isEmpty()) ? Double.parseDouble(estimatedTimeStr) : 0.0;
 	        double distance = (distanceStr != null && !distanceStr.isEmpty()) ? Double.parseDouble(distanceStr) : 0.0;
-	        int vehicleId = (Integer.parseInt(vehicleIdStr) != 0 ? Integer.parseInt(vehicleIdStr) : 0 );
-	        
-	        Booking createdBooking = bookingService.createBooking(pickupLocation, destination,bookingDatetime, customerId, pickupLat, pickupLng, destinationLat, destinationLng, estimatedTime, distance, vehicleId);
+	        int vehicleId = (vehicleIdStr != null && !vehicleIdStr.isEmpty()) ? Integer.parseInt(vehicleIdStr) : 0;
+
+	        Booking createdBooking = bookingService.createBooking(pickupLocation, destination, bookingDatetime, customerId, 
+	            pickupLat, pickupLng, destinationLat, destinationLng, estimatedTime, distance, vehicleId);
+
 	        String json = objectMapper.writeValueAsString(createdBooking);
 	        System.out.println("Created Booking JSON: " + json);
 
-	        // Prepare a JSON response
-	        response.setContentType("application/json");
-	        response.setCharacterEncoding("UTF-8");
-	        
-	        // Send a success response back to the client
 	        String jsonResponse = "{\"success\": true, \"message\": \"Booking Success! Go to My Bookings to check status.\"}";
+	        response.setStatus(HttpServletResponse.SC_OK);
 	        response.getWriter().write(jsonResponse);
-	    
-	    } catch (Exception e) {
-	    	System.out.println(e.getMessage());
-	    	e.printStackTrace();
-	    	
-	    	response.setContentType("application/json");
-	        response.setCharacterEncoding("UTF-8");	 
 	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("Error during booking: " + e.getMessage());
+
 	        String errorResponse = "{\"success\": false, \"message\": \"Booking failed. Please try again!\"}";
+	        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 	        response.getWriter().write(errorResponse);
-	    } 
+	    } finally {
+	        response.getWriter().flush();
+	        response.getWriter().close();
+	    }
 	}
+
 	
 	private void showCustomerOrders(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {   
 		try {
@@ -177,11 +180,9 @@ public class CustomerController extends HttpServlet {
 
 	        bookingService.deleteBooking(bookingId);
 
-	        // Prepare a JSON response
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");
 	        
-	        // Send a success response back to the client
 	        String jsonResponse = "{\"success\": true, \"message\": \"Booking deleted successfully!\"}";
 	        response.getWriter().write(jsonResponse);
 	    

@@ -86,7 +86,7 @@ function calculateDistance() {
 		return;
 	}
 
-	var orsApiKey = '5b3ce3597851110001cf6248ee30f263434d4df09566b2866c0dc783'; // Replace with your API key
+	var orsApiKey = '5b3ce3597851110001cf6248ee30f263434d4df09566b2866c0dc783'; 
 	var url =
 		"https://api.openrouteservice.org/v2/directions/driving-car?api_key=" +
 		orsApiKey +

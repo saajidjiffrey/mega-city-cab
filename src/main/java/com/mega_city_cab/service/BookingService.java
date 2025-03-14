@@ -45,9 +45,25 @@ public class BookingService {
 		}
 	}
 	
+	public boolean assignBookingToDriver(int bookingId, int driverId) throws Exception {
+	    try {
+	        return bookingDAO.assignBookingToDriver(bookingId, driverId);
+	    } catch (Exception e) {
+	        throw new Exception("Error assigning booking to driver: " + e.getMessage(), e);
+	    }
+	}
+	
 	public void deleteBooking(int bookingId) throws Exception {
 		try {
 			bookingDAO.deleteBooking(bookingId);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage(), e);
+		}
+	}
+	
+	public void driverAcceptBooking(int bookingId, int driverId) throws Exception {
+		try {
+			bookingDAO.driverAcceptBooking(bookingId, driverId);
 		} catch (Exception e) {
 			throw new Exception(e.getMessage(), e);
 		}
@@ -105,6 +121,18 @@ public class BookingService {
 		try {
 			System.out.println("service");
 			return bookingDAO.getAllCompletedBookings();
+		} catch (Exception e) {
+			throw new Exception(e.getMessage(), e);
+		}
+    }
+	
+	public List<Booking> getAllBookingsByUserAndStatus(String userType, int userId, String status) throws Exception {
+		try {
+			if (userType.equalsIgnoreCase("CUSTOMER")) {
+				return bookingDAO.getAllBookingsByCustomerAndStatus(userId, status);
+			} else {
+				return bookingDAO.getAllBookingsByDriverAndStatus(userId, status);
+			} 
 		} catch (Exception e) {
 			throw new Exception(e.getMessage(), e);
 		}

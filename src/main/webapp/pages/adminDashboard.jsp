@@ -8,7 +8,7 @@
 
 <div id="wrapper">
 	<!--  sidemenu -->
-	<%@ include file="/common/driverSideMenu.jsp"%>
+	<%@ include file="/common/adminSideMenu.jsp"%>
 
 	<!-- Page Content -->
 	<div id="page-content-wrapper">
@@ -17,7 +17,8 @@
 				<a href="#" class="btn" id="menu-toggle"><i class="bi bi-list"></i></a>
 			</div>
 			<div class="container mx-auto ">
-				<h1 class="my-4 text-center text-primary">Available Rides</h1>
+				<h1 class="my-3">All Bookings</h1>
+
 				<div class="card">
 					<div class="card-body">
 						<table class="table table-striped table-hover">
@@ -50,7 +51,8 @@
 												<td><span class="badge bg-info status">Accepted</span></td>
 											</c:when>
 											<c:when test="${booking.status eq 'onride'}">
-												<td><span class="badge bg-warning status">On Ride</span></td>
+												<td><span class="badge bg-warning status">On
+														Ride</span></td>
 											</c:when>
 											<c:when test="${booking.status eq 'cancelled'}">
 												<td><span class="badge bg-danger status">Cancelled</span></td>
@@ -63,10 +65,15 @@
 											</c:otherwise>
 										</c:choose>
 										<td><c:if test="${booking.status eq 'booked'}">
+												<!-- Dropdown for driver selection -->
+												<select class="driver-select">
+													<c:forEach var="driver" items="${drivers}">
+														<option value="${driver.driverId}">${driver.name}</option>
+													</c:forEach>
+												</select>
 												<button type="button"
-													class="btn btn-primary btn-acceptBooking"
-													booking-id="${booking.bookingId}">
-													Accept Booking
+													class="btn btn-primary btn-assignBooking"
+													booking-id="${booking.bookingId}">Assign to Driver
 												</button>
 											</c:if></td>
 									</tr>
@@ -79,13 +86,37 @@
 		</div>
 	</div>
 </div>
+
+<!-- Modal for confirmation -->
+<div class="modal fade" id="assignBookingModal" tabindex="-1"
+	aria-labelledby="assignBookingModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="assignBookingModalLabel">Confirm
+					Driver Assignment</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close"></button>
+			</div>
+			<div class="modal-body">Are you sure you want to assign this
+				booking to the selected driver?</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary"
+					data-bs-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary"
+					id="confirmAssignBooking">Yes, Assign</button>
+			</div>
+		</div>
+	</div>
+</div>
 <!--  -->
 <%@ include file="/common/footer.jsp"%>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".btn-acceptBooking").forEach(button => {
+    document.querySelectorAll(".btn-assignBooking").forEach(button => {
         button.addEventListener("click", function () {
+        	console.log('hi');
             let bookingId = this.getAttribute("booking-id");
 
             if (!bookingId) {
@@ -95,39 +126,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
             console.log("Accepting booking with ID:", bookingId);
 
+            // Collect the driverId from the dropdown (you should have a dropdown with driver options)
+            let driverId = this.closest("tr").querySelector("select.driver-select").value;
+            console.log("Accepting booking with driverID:", driverId);
+            if (!driverId) {
+                showToast("Please select a driver!", "bg-danger");
+                return;
+            }
+
             let urlEncodedData = new URLSearchParams();
             urlEncodedData.append("bookingId", bookingId);
+            urlEncodedData.append("driverId", driverId);
 
-            fetch("driver?action=acceptBooking", {
+            fetch("admin?action=assignBookingToDriver", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: urlEncodedData.toString()
             })
-            .then(response => response.text()) 
+            .then(response => response.json())  // Make sure to parse the response as JSON
             .then(data => {
-                console.log("Raw Response:", data); 
+                console.log("Raw Response:", data);
 
-                try {
-                    let jsonData = JSON.parse(data);
-                    if (jsonData.success) {
-                        this.closest("tr").querySelector(".status").innerText = "Accepted";
-                        showToast("Booking Accepted Successfully!", "bg-success");
-                    } else {
-                        showToast("Failed to Accept Booking", "bg-danger");
-                    }
-                } catch (error) {
-                    console.error("JSON Parsing Error:", error);
-                    showToast("Invalid response from server", "bg-danger");
+                if (data.success) {
+                    this.closest("tr").querySelector(".status").innerText = "Assigned to Driver";
+                    showToast("Booking Assigned Successfully!", "bg-success");
+                } else {
+                    showToast("Failed to Assign Booking", "bg-danger");
                 }
             })
             .catch(error => {
                 console.error("Fetch Error:", error);
                 showToast("An error occurred. Please try again.", "bg-danger");
             });
-
-
         });
     });
 });
+
 </script>
 

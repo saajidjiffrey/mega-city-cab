@@ -1,5 +1,7 @@
 package com.mega_city_cab.service;
 
+import java.util.List;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.mega_city_cab.dao.DriverDAO;
@@ -27,7 +29,7 @@ public class DriverService {
 	
 	public Driver registerDriver(Driver driver) throws Exception {
 		try {
-			String hashedPassword = BCrypt.hashpw(driver.getPassword(), BCrypt.gensalt()); // Hash password before saving
+			String hashedPassword = BCrypt.hashpw(driver.getPassword(), BCrypt.gensalt());
 	        driver.setPassword(hashedPassword);
 	        driver.setRole("DRIVER");
 	        return driverDAO.addDriver(driver);
@@ -35,5 +37,13 @@ public class DriverService {
 			throw new Exception(e.getMessage(), e);
 		}        
     }
+	
+	public List<Driver> getAllDrivers() throws Exception {
+	    try {
+	        return driverDAO.getAllDrivers(); 
+	    } catch (Exception e) {
+	        throw new Exception("Error in service layer: " + e.getMessage(), e);
+	    }
+	}
 
 }

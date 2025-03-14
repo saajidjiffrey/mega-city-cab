@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.mega_city_cab.model.Customer;
 import com.mega_city_cab.model.Driver;
@@ -79,4 +81,42 @@ public class DriverDAO {
         
         return driver;
     }
+	
+	public List<Driver> getAllDrivers() throws Exception {
+	    String query = "SELECT u.userId, u.name, u.address, u.NIC, u.phone, u.email, u.userName, u.password, u.role, " +
+	                   "d.driverId, d.licenseNo " +
+	                   "FROM User u " +
+	                   "JOIN Driver d ON u.userId = d.userId";
+
+	    List<Driver> drivers = new ArrayList<>();
+	    
+	    try {
+	        Connection connection = DBConnectionFactory.getConnection();
+	        PreparedStatement statement = connection.prepareStatement(query);
+	        ResultSet resultSet = statement.executeQuery();
+	        
+	        while (resultSet.next()) {
+	            Driver driver = new Driver(
+	                    resultSet.getInt("userId"),
+	                    resultSet.getString("name"),
+	                    resultSet.getString("address"),
+	                    resultSet.getString("NIC"),
+	                    resultSet.getString("phone"),
+	                    resultSet.getString("email"),
+	                    resultSet.getString("userName"),
+	                    resultSet.getString("password"),
+	                    resultSet.getString("role"),
+	                    resultSet.getInt("driverId"),
+	                    resultSet.getString("licenseNo")
+	            );
+	            drivers.add(driver);
+	        }
+	    } catch (Exception e) {
+	        throw new Exception("Error retrieving drivers: " + e.getMessage(), e);
+	    }
+	    
+	    return drivers;
+	}
+
+
 }

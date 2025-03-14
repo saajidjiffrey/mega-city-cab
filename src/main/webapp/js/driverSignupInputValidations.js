@@ -1,8 +1,4 @@
-/**
- * 
- */
 
-//Customer Form validations
 	document.getElementById("dName").addEventListener("input", function () {
 	    let errorDiv = this.nextElementSibling;
 	    let value = this.value;
