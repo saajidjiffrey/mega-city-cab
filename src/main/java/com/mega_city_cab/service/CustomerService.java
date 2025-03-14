@@ -1,6 +1,7 @@
 package com.mega_city_cab.service;
 
 import com.mega_city_cab.dao.CustomerDAO;
+import com.mega_city_cab.exception.AuthenticationException;
 import com.mega_city_cab.model.Customer;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -23,9 +24,14 @@ public class CustomerService {
 		return instance;
 	}
 	
-	public Customer registerCustomer(Customer customer) {
-        String hashedPassword = BCrypt.hashpw(customer.getPassword(), BCrypt.gensalt()); // Hash password before saving
-        customer.setPassword(hashedPassword);
-        return customerDAO.addCustomer(customer);
+	public Customer registerCustomer(Customer customer) throws Exception {
+        try {
+        	String hashedPassword = BCrypt.hashpw(customer.getPassword(), BCrypt.gensalt());
+            customer.setPassword(hashedPassword);
+            customer.setRole("CUSTOMER");
+            return customerDAO.addCustomer(customer);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage(), e); 
+		}
     }
 }

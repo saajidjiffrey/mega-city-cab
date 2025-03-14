@@ -13,12 +13,14 @@ import java.util.List;
 import com.mega_city_cab.model.Order;
 
 public class OrderDAO {
-	public Order addOrdeer (Order order) {
+	public Order addOrder (Order order) throws Exception {
 		String query = "INSERT INTO Orders (startTime, endTime, distance, fareAmount, bookingId, driverId, customerId) VALUES (? ,? ,? ,? ,?, ?, ?)"; 
 		
-		try (Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) 
-		{		
+		try  
+		{	
+			Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			
 			statement.setTimestamp(1, Timestamp.valueOf(order.getStartTime()));
 			statement.setTimestamp(2, Timestamp.valueOf(order.getEndTime())  );
 			statement.setDouble(3, order.getDistance());
@@ -36,36 +38,39 @@ public class OrderDAO {
 			
 			return order;
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
+			throw new SQLException("Error creating order: " + e.getMessage(), e);
 		}
 	}
 	
-	public void deleteOrder (int orderId) throws SQLException  {
+	public void deleteOrder (int orderId) throws Exception  {
 		String query = "DELETE FROM Orders WHERE orderId = ?"; 
 		
-		try (Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query)) 
+		try  
 		{
+			Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query);
+			
 			statement.setInt(1, orderId);
 			int rowsAffected = statement.executeUpdate();
 
 	        if (rowsAffected == 0) {
-	            throw new SQLException("No order found with ID: " + orderId);
+	            throw new Exception("No order found with ID: " + orderId);
 	        }
 			
 		} catch (SQLException e) {
-	        throw new SQLException("Error deleting order: " + e.getMessage(), e);
+	        throw new Exception("Error deleting order: " + e.getMessage(), e);
 		}
 	}
 	
-	public Order getOrderById(int orderId) throws SQLException {
+	public Order getOrderById(int orderId) throws Exception {
         String query = "SELECT * FROM Orders WHERE orderId = ?";
         Order order;
         
-        try (Connection connection = DBConnectionFactory.getConnection();
-        	PreparedStatement statement = connection.prepareStatement(query)) 
+        try  
         {	
+        	Connection connection = DBConnectionFactory.getConnection();
+        	PreparedStatement statement = connection.prepareStatement(query);
+        	
         	statement.setInt(1,orderId );            
             ResultSet resultSet = statement.executeQuery();
             
@@ -81,23 +86,25 @@ public class OrderDAO {
 
                 order = new Order(orderId, startTime, endTime, distance, fareAmount, bookingId, driverId, customerId);
             } else {
-                throw new SQLException("No Orders found with orderId: " + orderId);
+                throw new Exception("No Orders found with orderId: " + orderId);
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving orders: " + e.getMessage(), e);
+			throw new Exception("Error retrieving orders: " + e.getMessage(), e);
 		}
         
         return order;
     }
 
-	public List<Order> getAllBookings() throws SQLException {
+	public List<Order> getAllBookings() throws Exception {
         List<Order> orders = new ArrayList<>();
         String query = "SELECT * FROM Orders";
 
-        try (Connection connection = DBConnectionFactory.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query)) 
+        try  
         {
+        	Connection connection = DBConnectionFactory.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            
             while (resultSet.next()) 
             {
             	int orderId = resultSet.getInt("orderId");
@@ -112,7 +119,7 @@ public class OrderDAO {
             	orders.add(new Order(orderId, startTime, endTime, distance, fareAmount, bookingId, driverId, customerId));
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving bookings: " + e.getMessage(), e);
+			throw new Exception("Error retrieving bookings: " + e.getMessage(), e);
 		}
         
         return orders;

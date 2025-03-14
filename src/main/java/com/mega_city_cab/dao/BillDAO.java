@@ -14,12 +14,14 @@ import com.mega_city_cab.model.Bill;
 import com.mega_city_cab.model.Order;
 
 public class BillDAO {
-	public Bill addBill (Bill bill) {
-		String query = "INSERT INTO Bill (totalAmount, tax, discount, finalAmount, paymentStatus, orderId) VALUES (,? ,? ,? ,?, ?, ?)"; 
+	public Bill addBill (Bill bill) throws Exception {
+		String query = "INSERT INTO Bill (totalAmount, tax, discount, finalAmount, paymentStatus, orderId) VALUES (? ,? ,? ,?, ?, ?)"; 
 		
-		try (Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) 
-		{		
+		try
+		{	
+			Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
+					
 			statement.setDouble(1, bill.getTotalAmount());
 			statement.setDouble(2, bill.getTax());
 			statement.setDouble(3, bill.getDiscount());
@@ -37,16 +39,18 @@ public class BillDAO {
 			return bill;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			throw new Exception("Database error: " + e.getMessage(), e);
 		}
 	}
 	
-	public boolean updateBillPaymementStatus (int billId, String status) throws SQLException {
+	public boolean updateBillPaymementStatus (int billId, String status) throws Exception {
 		String query = "UPDATE Bill SET paymentStatus = ? WHERE billId = ?"; 
 		
-		try (Connection connection = DBConnectionFactory.getConnection();
-				PreparedStatement statement = connection.prepareStatement(query);) 
+		try
 		{
+			Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query);
+			
 			statement.setString(1, status );
 			statement.setInt(2, billId);
 			int rowsAffected = statement.executeUpdate();
@@ -57,18 +61,20 @@ public class BillDAO {
 			
 	        return rowsAffected > 0; 
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw new Exception("Database error: " + e.getMessage(), e);
 		}
 	}
 	
-	public void deleteBill (int billId) throws SQLException  {
+	public void deleteBill (int billId) throws Exception  {
 		String query = "DELETE FROM Bill WHERE billId = ?"; 
 		
-		try (Connection connection = DBConnectionFactory.getConnection();
-			PreparedStatement statement = connection.prepareStatement(query)) 
+		try 
 		{
+			Connection connection = DBConnectionFactory.getConnection();
+			PreparedStatement statement = connection.prepareStatement(query);
+					
 			statement.setInt(1, billId);
 			int rowsAffected = statement.executeUpdate();
 
@@ -76,18 +82,20 @@ public class BillDAO {
 	            throw new SQLException("No bill found with ID: " + billId);
 	        }
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 	        throw new SQLException("Error deleting bill: " + e.getMessage(), e);
 		}
 	}
 	
-	public Bill getBillById(int billId) throws SQLException {
+	public Bill getBillById(int billId) throws Exception {
         String query = "SELECT * FROM Bill WHERE billId = ?";
         Bill bill;
         
-        try (Connection connection = DBConnectionFactory.getConnection();
-        	PreparedStatement statement = connection.prepareStatement(query)) 
+        try 
         {	
+        	Connection connection = DBConnectionFactory.getConnection();
+        	PreparedStatement statement = connection.prepareStatement(query);
+        			
         	statement.setInt(1,billId );            
             ResultSet resultSet = statement.executeQuery();
             
@@ -105,20 +113,22 @@ public class BillDAO {
                 throw new SQLException("No Bill found with billId: " + billId);
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving bills: " + e.getMessage(), e);
+			throw new Exception("Error retrieving bills: " + e.getMessage(), e);
 		}
         
         return bill;
     }
 
-	public List<Bill> getAllBills() throws SQLException {
+	public List<Bill> getAllBills() throws Exception {
         List<Bill> bills = new ArrayList<>();
         String query = "SELECT * FROM Bill";
 
-        try (Connection connection = DBConnectionFactory.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query)) 
+        try 
         {
+        	Connection connection = DBConnectionFactory.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            
             while (resultSet.next()) 
             {
             	int billId = resultSet.getInt("billId");

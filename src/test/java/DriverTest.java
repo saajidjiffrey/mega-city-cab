@@ -16,9 +16,10 @@ public class DriverTest {
 	private String NIC = "200131501106";
 	private String phone = "0764737149";
 	private String email = "mohamedsaajid@gmail.com";
-	private String userName = "saajid14";
-	private String password = "Saajid123!";
+	private String userName = "saajidDriver";
+	private String password = "password";
 	private String licenseNo = "123456abcdef";
+	private String role = "DRIVER";
 	
 	private DriverService driverService;
 	ObjectMapper objectMapper = new ObjectMapper();
@@ -29,12 +30,27 @@ public class DriverTest {
     }
 
 	@Test
-	public void registerDriver() throws JsonProcessingException {
-        Driver driver = new Driver(name, address, NIC, phone, email, userName, password, licenseNo);
-        Driver createdDriver = driverService.registerDriver(driver);
-        
-        String json = objectMapper.writeValueAsString(createdDriver);
-        System.out.println(json);
+	public void registerDriver() throws JsonProcessingException, Exception{       
+		try {
+	        Driver driver = new Driver();
+	        driver.setName(name);
+	        driver.setAddress(address);
+	        driver.setNIC(NIC);
+	        driver.setPhone(phone);
+	        driver.setEmail(email);
+	        driver.setUserName(userName);
+	        driver.setPassword(password);
+	        driver.setLicenseNo(licenseNo);
+	        driver.setRole(role);
+	        
+	        Driver createdDriver = driverService.registerDriver(driver);
+	        
+	        String json = objectMapper.writeValueAsString(createdDriver);
+	        System.out.println(json);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
     }
 
 }
