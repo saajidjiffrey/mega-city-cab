@@ -19,7 +19,7 @@ public class BookingService {
 		if (instance == null) {
 			synchronized (BookingService.class) {
 				if (instance == null) {
-					instance = new BookingService();	
+					instance = new BookingService();
 				}
 			}
 		}
@@ -49,64 +49,64 @@ public class BookingService {
 		try {
 			bookingDAO.deleteBooking(bookingId);
 		} catch (Exception e) {
-			throw e;
+			throw new Exception(e.getMessage(), e);
 		}
 	}
 	
-	public Booking getBookingById(int bookingId) throws SQLException {
+	public Booking getBookingById(int bookingId) throws Exception {
 		try {
 			return bookingDAO.getBookingById(bookingId);
 		} catch (Exception e) {
-			throw e;
+			throw new Exception(e.getMessage(), e);
 		}
     }
 	
-	public List<Booking> getAllBookings() throws SQLException {
+	public List<Booking> getAllBookings() throws Exception {
 		try {
 			return bookingDAO.getAllBookings();
 		} catch (Exception e) {
-			throw e;
+			throw new Exception(e.getMessage(), e);
 		}
     }
 	
-	public List<Booking> getAllBookingsByCustomer(int customerId) throws SQLException {
+	public List<Booking> getAllBookingsByCustomer(int customerId) throws Exception {
 		try {
 			return bookingDAO.getAllBookingsByCustomer(customerId);
 		} catch (Exception e) {
-			throw e;
+			throw new Exception(e.getMessage(), e);
 		}
     }
 
-	public List<Booking> getAllBookingsByDriver(int driverId) throws SQLException {
+	public List<Booking> getAllBookingsByDriver(int driverId) throws Exception {
 		try {
 			return bookingDAO.getAllBookingsByDriver(driverId);
 		} catch (Exception e) {
-			throw e;
+			throw new Exception(e.getMessage(), e);
 		}
     }
 	
-	public List<Booking> getAllBookingsByStatus(String status) throws SQLException {
+	public List<Booking> getAllBookingsByStatus(String status) throws Exception {
 		try {
 			return bookingDAO.getAllBookingsByStatus(status);
 		} catch (Exception e) {
-			throw e;
+			throw new Exception(e.getMessage(), e);
 		}
     }
 	
-	public List<Booking> getAllBookingsByStatus(String status1, String status2) throws SQLException {
+	public List<Booking> getAllBookingsByStatus(String status1, String status2) throws Exception {
 		try {
 			return bookingDAO.getAllBookingsByStatus(status1, status2);
 		} catch (Exception e) {
-			throw e;
+			throw new Exception(e.getMessage(), e);
 		}
     }
 	
-	public List<Booking> getAllCompletedBookings() throws SQLException {
+	public List<Booking> getAllCompletedBookings() throws Exception {
 		try {
 			System.out.println("service");
 			return bookingDAO.getAllCompletedBookings();
 		} catch (Exception e) {
-			throw e;
+			throw new Exception(e.getMessage(), e);
 		}
     }
 }

@@ -38,7 +38,7 @@
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>BookingController</servlet-name>
-  	<url-pattern>/booking</url-pattern>
+  	<url-pattern>/Booking</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>DriverController</servlet-name>

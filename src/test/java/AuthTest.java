@@ -19,7 +19,7 @@ public class AuthTest {
     }
 
 	@Test
-	public void userLogin() throws JsonProcessingException{
+	public void userLogin() throws JsonProcessingException, Exception{
         String userName = "saajidDriver";
         String password = "password";
         

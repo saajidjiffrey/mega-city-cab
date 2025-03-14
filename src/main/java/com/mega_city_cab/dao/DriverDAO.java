@@ -40,7 +40,7 @@ public class DriverDAO {
 		}
 	}
 	
-	public Driver getDriverByUserId(int userId) throws SQLException {
+	public Driver getDriverByUserId(int userId) throws Exception {
 		String query = "SELECT u.userId, u.name, u.address, u.NIC, u.phone, u.email, u.userName, u.password, u.role, " +
                 "d.driverId, d.licenseNo " +
                 "FROM User u " +
@@ -71,10 +71,10 @@ public class DriverDAO {
                         resultSet.getString("licenseNo")
                     );
                 } else {
-                throw new SQLException("No driver found with userId: " + userId);
+                throw new Exception("No driver found with userId: " + userId);
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving driver: " + e.getMessage(), e);
+			throw new Exception("Error retrieving driver: " + e.getMessage(), e);
 		}
         
         return driver;

@@ -29,16 +29,20 @@ public class VehicleService {
 	}
 	
 	//use DTOs
-	public Vehicle createVehicle(int passengerCount, double pricePerKm, String vehicleType, double taxPercentage, double discountPercentage) {
-		Vehicle newVehicle = new Vehicle(passengerCount, pricePerKm, vehicleType, taxPercentage, discountPercentage);
-		return vehicleDAO.addVehicle(newVehicle);
+	public Vehicle createVehicle(int passengerCount, double pricePerKm, String vehicleType, double taxPercentage, double discountPercentage) throws Exception {
+		try {
+			Vehicle newVehicle = new Vehicle(passengerCount, pricePerKm, vehicleType, taxPercentage, discountPercentage);
+			return vehicleDAO.addVehicle(newVehicle);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage(), e);
+		}
 	}
 	
 	public boolean updatePricePerKm(int vehicleId, double pricePerKm) throws Exception {
 		try {
 			return vehicleDAO.updatePricePerKm(vehicleId, pricePerKm);
 		} catch (Exception e) {
-			throw e;
+			throw new Exception(e.getMessage(), e);
 		}
 	}
 	
@@ -46,23 +50,23 @@ public class VehicleService {
 		try {
 			vehicleDAO.deleteVehicle(vehicleId);
 		} catch (Exception e) {
-			throw e;
+			throw new Exception(e.getMessage(), e);
 		}
 	}
 	
-	public Vehicle getVehicleById(int vehicleId) throws SQLException {
+	public Vehicle getVehicleById(int vehicleId) throws Exception {
 		try {
 			return vehicleDAO.getVehicleById(vehicleId);
 		} catch (Exception e) {
-			throw e;
+			throw new Exception(e.getMessage(), e);
 		}
     }
 	
-	public List<Vehicle> getAllVehicles() throws SQLException {
+	public List<Vehicle> getAllVehicles() throws Exception {
 		try {
 			return vehicleDAO.getAllVehicles();
 		} catch (Exception e) {
-			throw e;
+			throw new Exception(e.getMessage(), e);
 		}
     }
 }

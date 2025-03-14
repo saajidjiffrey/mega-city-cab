@@ -35,7 +35,7 @@ public class AuthenticationService {
 		return instance;
 	}
 	
-	public User userLogin(String userName, String password) throws AuthenticationException {
+	public User userLogin(String userName, String password) throws AuthenticationException, Exception {
 	    try {
 	        User user = userDAO.getUserByUserName(userName);
 
@@ -63,7 +63,7 @@ public class AuthenticationService {
 	        return user;
 
 	    } catch (Exception e) {
-	        throw new AuthenticationException("Auth Error: " + e.getMessage(), e);
+	        throw new Exception("Auth Error: " + e.getMessage(), e); 
 	    }
 	}
 }

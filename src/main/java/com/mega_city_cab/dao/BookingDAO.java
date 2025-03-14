@@ -15,7 +15,7 @@ import com.mega_city_cab.model.Booking;
 import com.mega_city_cab.model.Order;
 
 public class BookingDAO {
-	public Booking addBooking (Booking booking) throws Exception{
+	public Booking addBooking (Booking booking) throws Exception{ 
 		String query = "INSERT INTO Booking (pickupLocation, destination, bookingDatetime, status, customerId, pickupLat, pickupLng, destinationLat, destinationLng, estimatedTime, distance, vehicleId  ) VALUES (? ,? ,? ,? ,?, ? ,? ,? ,? ,?,? ,? )"; 
 		
 		try 
@@ -55,7 +55,7 @@ public class BookingDAO {
 		}
 	}
 	
-	public boolean updateBookingStatus (int bookingId, String status) throws SQLException {
+	public boolean updateBookingStatus (int bookingId, String status) throws Exception {
 		String query = "UPDATE Booking SET status = ? WHERE bookingId = ?"; 
 		
 		try 
@@ -73,13 +73,13 @@ public class BookingDAO {
 			
 	        return rowsAffected > 0; 
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw new Exception("Database error: " + e.getMessage(), e);
 		}
 	}
 	
-	public void deleteBooking (int bookingId) throws SQLException  {
+	public void deleteBooking (int bookingId) throws Exception  {
 		String query = "DELETE FROM Booking WHERE bookingId = ?"; 
 		
 		try 
@@ -94,12 +94,12 @@ public class BookingDAO {
 	            throw new SQLException("No booking found with ID: " + bookingId);
 	        }
 			
-		} catch (SQLException e) {
-	        throw new SQLException("Error deleting booking: " + e.getMessage(), e);
+		} catch (Exception e) {
+	        throw new Exception("Error deleting booking: " + e.getMessage(), e);
 		}
 	}
 	
-	public Booking getBookingById(int bookingId) throws SQLException {
+	public Booking getBookingById(int bookingId) throws Exception {
         String query = "SELECT * FROM Booking WHERE bookingId = ?";
         Booking booking;
         
@@ -129,16 +129,16 @@ public class BookingDAO {
 
                 booking = new Booking(bookingId, pickupLocation, destination, bookingDateTime, status, customerId, driverId, pickupLat, pickupLng, destinationLat, destinationLng, estimatedTime, distance, vehicleId);
             } else {
-                throw new SQLException("No booking found with bookingId: " + bookingId);
+                throw new Exception("No booking found with bookingId: " + bookingId);
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving bookings: " + e.getMessage(), e);
+			throw new Exception("Error retrieving bookings: " + e.getMessage(), e);
 		}
         
         return booking;
     }
 
-	public List<Booking> getAllBookings() throws SQLException {
+	public List<Booking> getAllBookings() throws Exception {
         List<Booking> bookings = new ArrayList<>();
         String query = "SELECT * FROM Booking";
 
@@ -169,13 +169,13 @@ public class BookingDAO {
             	bookings.add(new Booking(bookingId, pickupLocation, destination, bookingDateTime, status, customerId, driverId, pickupLat, pickupLng, destinationLat, destinationLng, estimatedTime, distance, vehicleId));
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving bookings: " + e.getMessage(), e);
+			throw new Exception("Error retrieving bookings: " + e.getMessage(), e);
 		}
         
         return bookings;
     }
 
-	public List<Booking> getAllBookingsByCustomer(int customerId) throws SQLException {
+	public List<Booking> getAllBookingsByCustomer(int customerId) throws Exception {
         List<Booking> bookings = new ArrayList<>();
         String query = "SELECT * FROM Booking WHERE customerId = ?";
 
@@ -207,13 +207,13 @@ public class BookingDAO {
             	bookings.add(new Booking(bookingId, pickupLocation, destination, bookingDateTime, status, customerId, driverId, pickupLat, pickupLng, destinationLat, destinationLng, estimatedTime, distance, vehicleId));
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving bookings: " + e.getMessage(), e);
+			throw new Exception("Error retrieving bookings: " + e.getMessage(), e);
 		}
         
         return bookings;
     }
 	
-	public List<Booking> getAllBookingsByDriver(int driverId) throws SQLException {
+	public List<Booking> getAllBookingsByDriver(int driverId) throws Exception {
         List<Booking> bookings = new ArrayList<>();
         String query = "SELECT * FROM Booking WHERE driverId = ?";
 
@@ -245,13 +245,13 @@ public class BookingDAO {
             	bookings.add(new Booking(bookingId, pickupLocation, destination, bookingDateTime, status, customerId, driverId, pickupLat, pickupLng, destinationLat, destinationLng, estimatedTime, distance, vehicleId));
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving bookings: " + e.getMessage(), e);
+			throw new Exception("Error retrieving bookings: " + e.getMessage(), e);
 		}
         
         return bookings;
     }
 	
-	public List<Booking> getAllBookingsByStatus(String status) throws SQLException {
+	public List<Booking> getAllBookingsByStatus(String status) throws Exception {
         List<Booking> bookings = new ArrayList<>();
         String query = "SELECT * FROM Booking WHERE status = ?";
 
@@ -283,13 +283,13 @@ public class BookingDAO {
             	bookings.add(new Booking(bookingId, pickupLocation, destination, bookingDateTime, status, customerId, driverId, pickupLat, pickupLng, destinationLat, destinationLng, estimatedTime, distance, vehicleId));
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving bookings: " + e.getMessage(), e);
+			throw new Exception("Error retrieving bookings: " + e.getMessage(), e);
 		}
         
         return bookings;
     }
 	
-	public List<Booking> getAllBookingsByStatus(String status1, String status2) throws SQLException {
+	public List<Booking> getAllBookingsByStatus(String status1, String status2) throws Exception {
         List<Booking> bookings = new ArrayList<>();
         String query = "SELECT * FROM Booking WHERE status IN (?, ?)";
 
@@ -323,13 +323,13 @@ public class BookingDAO {
             	bookings.add(new Booking(bookingId, pickupLocation, destination, bookingDateTime, status, customerId, driverId, pickupLat, pickupLng, destinationLat, destinationLng, estimatedTime, distance, vehicleId));
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving bookings: " + e.getMessage(), e);
+			throw new Exception("Error retrieving bookings: " + e.getMessage(), e);
 		}
         
         return bookings;
     }
 
-	public List<Booking> getAllCompletedBookings() throws SQLException {
+	public List<Booking> getAllCompletedBookings() throws Exception {
 		List<Booking> bookings = new ArrayList<>();
 		String query = "SELECT "
 			    + "b.bookingId, b.pickupLocation, b.destination, b.bookingDateTime, b.driverId, b.customerId, "
@@ -393,14 +393,14 @@ public class BookingDAO {
 //				booking.setBill(bill); // Set Bill
 				bookings.add(booking);
 			}
-		} catch (SQLException e) {
-			throw new SQLException("Error retrieving completed bookings: " + e.getMessage(), e);
+		} catch (Exception e) {
+			throw new Exception("Error retrieving completed bookings: " + e.getMessage(), e);
 		}
 
 		return bookings;
 	}
 
-	private Order getOrderByBookingId(int bookingId, Connection connection) throws SQLException {
+	private Order getOrderByBookingId(int bookingId, Connection connection) throws Exception {
 	    String query = "SELECT * FROM Orders WHERE bookingId = ?";
 	    try (PreparedStatement statement = connection.prepareStatement(query)) {
 	        statement.setInt(1, bookingId);
@@ -423,7 +423,7 @@ public class BookingDAO {
 	    }
 	}
 	
-	private Bill getBillByOrderId(int orderId, Connection connection) throws SQLException {
+	private Bill getBillByOrderId(int orderId, Connection connection) throws Exception {
 	    String query = "SELECT * FROM Bill WHERE orderId = ?";
 	    try (PreparedStatement statement = connection.prepareStatement(query)) {
 	        statement.setInt(1, orderId);

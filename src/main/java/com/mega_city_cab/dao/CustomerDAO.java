@@ -12,7 +12,7 @@ import com.mega_city_cab.model.Customer;
 
 public class CustomerDAO {
 	public Customer addCustomer (Customer customer ) throws Exception{
-		new UserDAO().addUser(customer);
+		new UserDAO().addUser(customer); 
 		String query = "INSERT INTO Customer (userId) VALUES (?)"; //setting the foreign key
 		
 		try  
@@ -41,7 +41,7 @@ public class CustomerDAO {
 		}
 	}
 	
-	public Customer getCustomerByUserId(int userId) throws SQLException {
+	public Customer getCustomerByUserId(int userId) throws Exception {
 		String query = "SELECT u.userId, u.name, u.address, u.NIC, u.phone, u.email, u.userName, u.password, u.role, " +
                 "c.customerId " +
                 "FROM User u " +
@@ -71,10 +71,10 @@ public class CustomerDAO {
                         resultSet.getInt("customerId")
                     );
                 } else {
-                throw new SQLException("No customer found with userId: " + userId);
+                throw new Exception("No customer found with userId: " + userId);
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving customer: " + e.getMessage(), e);
+			throw new Exception("Error retrieving customer: " + e.getMessage(), e);
 		}
         
         return customer;

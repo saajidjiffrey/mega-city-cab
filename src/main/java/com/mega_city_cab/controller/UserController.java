@@ -225,7 +225,7 @@ public class UserController extends HttpServlet {
 	        }
 
 
-	    } catch (AuthenticationException e) {
+	    } catch (Exception e) {
 	        System.out.println(e.getMessage());
 	        
 	        response.setContentType("application/json");

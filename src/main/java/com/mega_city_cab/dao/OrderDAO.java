@@ -42,7 +42,7 @@ public class OrderDAO {
 		}
 	}
 	
-	public void deleteOrder (int orderId) throws SQLException  {
+	public void deleteOrder (int orderId) throws Exception  {
 		String query = "DELETE FROM Orders WHERE orderId = ?"; 
 		
 		try  
@@ -54,15 +54,15 @@ public class OrderDAO {
 			int rowsAffected = statement.executeUpdate();
 
 	        if (rowsAffected == 0) {
-	            throw new SQLException("No order found with ID: " + orderId);
+	            throw new Exception("No order found with ID: " + orderId);
 	        }
 			
 		} catch (SQLException e) {
-	        throw new SQLException("Error deleting order: " + e.getMessage(), e);
+	        throw new Exception("Error deleting order: " + e.getMessage(), e);
 		}
 	}
 	
-	public Order getOrderById(int orderId) throws SQLException {
+	public Order getOrderById(int orderId) throws Exception {
         String query = "SELECT * FROM Orders WHERE orderId = ?";
         Order order;
         
@@ -86,16 +86,16 @@ public class OrderDAO {
 
                 order = new Order(orderId, startTime, endTime, distance, fareAmount, bookingId, driverId, customerId);
             } else {
-                throw new SQLException("No Orders found with orderId: " + orderId);
+                throw new Exception("No Orders found with orderId: " + orderId);
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving orders: " + e.getMessage(), e);
+			throw new Exception("Error retrieving orders: " + e.getMessage(), e);
 		}
         
         return order;
     }
 
-	public List<Order> getAllBookings() throws SQLException {
+	public List<Order> getAllBookings() throws Exception {
         List<Order> orders = new ArrayList<>();
         String query = "SELECT * FROM Orders";
 
@@ -119,7 +119,7 @@ public class OrderDAO {
             	orders.add(new Order(orderId, startTime, endTime, distance, fareAmount, bookingId, driverId, customerId));
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving bookings: " + e.getMessage(), e);
+			throw new Exception("Error retrieving bookings: " + e.getMessage(), e);
 		}
         
         return orders;

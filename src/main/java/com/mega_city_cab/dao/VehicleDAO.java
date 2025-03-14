@@ -11,7 +11,7 @@ import java.util.List;
 import com.mega_city_cab.model.Vehicle;
 
 public class VehicleDAO {
-	public Vehicle addVehicle(Vehicle vehicle) {
+	public Vehicle addVehicle(Vehicle vehicle) throws Exception {
 		String query = "INSERT INTO Vehicle (passengerCount, pricePerKm, vehicleType, taxPercentage, discountPercentage) VALUES (? ,? ,?, ?, ? )"; 
 		
 		try
@@ -32,13 +32,13 @@ public class VehicleDAO {
             }
 			
 			return vehicle;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			throw new Exception("Database Error " + e.getMessage(), e);
 		}
 	}
 	
-	public boolean updatePricePerKm(int vehicleId, double pricePerKm) throws SQLException {
+	public boolean updatePricePerKm(int vehicleId, double pricePerKm) throws Exception {
 		String query = "UPDATE Vehicle SET pricePerKm = ? WHERE billId = ?"; 
 		
 		try
@@ -56,13 +56,13 @@ public class VehicleDAO {
 			
 	        return rowsAffected > 0; 
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			throw new Exception("Database Error " + e.getMessage(), e);
 		}
 	}
 	
-	public void deleteVehicle (int vehicleId) throws SQLException  {
+	public void deleteVehicle (int vehicleId) throws Exception  {
 		String query = "DELETE FROM Vehicle WHERE vehicleId = ?"; 
 		
 		try 
@@ -77,12 +77,12 @@ public class VehicleDAO {
 	            throw new SQLException("No vehicle found with ID: " + vehicleId);
 	        }
 			
-		} catch (SQLException e) {
-	        throw new SQLException("Error deleting vehicle: " + e.getMessage(), e);
+		} catch (Exception e) {
+	        throw new Exception("Error deleting vehicle: " + e.getMessage(), e);
 		}
 	}
 	
-	public Vehicle getVehicleById(int vehicleId) throws SQLException {
+	public Vehicle getVehicleById(int vehicleId) throws Exception {
         String query = "SELECT * FROM Vehicle WHERE vehicleId = ?";
         Vehicle vehicle;
         
@@ -104,16 +104,16 @@ public class VehicleDAO {
 
                 vehicle = new Vehicle(vehicleId, passengerCount, pricePerKm, vehicleType, taxPercentage, discountPercentage);
             } else {
-                throw new SQLException("No Vehicle found with billId: " + vehicleId);
+                throw new Exception("No Vehicle found with billId: " + vehicleId);
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving bills: " + e.getMessage(), e);
+			throw new Exception("Error retrieving bills: " + e.getMessage(), e);
 		}
         
         return vehicle;
     }
 
-	public List<Vehicle> getAllVehicles() throws SQLException {
+	public List<Vehicle> getAllVehicles() throws Exception {
         List<Vehicle> vehicles = new ArrayList<>();
         String query = "SELECT * FROM Vehicle";
 
@@ -135,7 +135,7 @@ public class VehicleDAO {
                 vehicles.add(new Vehicle(vehicleId, passengerCount, pricePerKm, vehicleType, taxPercentage, discountPercentage));
             }
 		} catch (Exception e) {
-			throw new SQLException("Error retrieving bills: " + e.getMessage(), e);
+			throw new Exception("Error retrieving bills: " + e.getMessage(), e);
 		}
         
         return vehicles;

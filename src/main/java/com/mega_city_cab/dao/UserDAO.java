@@ -17,7 +17,7 @@ public class UserDAO {
 			Connection connection = DBConnectionFactory.getConnection();
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 					
-			statement.setString(1, user.getName());
+			statement.setString(1, user.getName()); 
 			statement.setString(2, user.getAddress());
 			statement.setString(3, user.getNIC());
 			statement.setString(4, user.getPhone());
@@ -45,7 +45,7 @@ public class UserDAO {
 		}
 	}
 	
-	public User getUserByUserName (String userName) {
+	public User getUserByUserName (String userName) throws Exception {
 		String query = "SELECT * FROM User WHERE userName = ?	";
 		
 		try 
@@ -70,7 +70,7 @@ public class UserDAO {
 						);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new Exception("Database error: " + e.getMessage(), e);
 		}
 		return null;
 	}
