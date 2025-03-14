@@ -54,11 +54,14 @@
 						<tr>
 							<th>Payment Status</th>
 							<td id="billPaymentStatus"></td>
+							<td class="d-none" id="billIdTD"></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div class="modal-footer">
+			<button type="button" class="btn btn-primary" id="payBillButton" data-bs-dismiss="modal" data-bill-id>Pay Bill</button>
+
 				<button type="button" class="btn btn-secondary"
 					data-bs-dismiss="modal">Close</button>
 			</div>
@@ -71,6 +74,8 @@ document.querySelectorAll(".btn-viewBill").forEach(button => {
     button.addEventListener("click", function () {
     	console.log("hi");
         // Get data from button attributes
+        document.getElementById("payBillButton").setAttribute("data-bill-id", this.getAttribute("data-bill-id"));
+        document.getElementById("billBookingDatetime").textContent = this.getAttribute("data-booking-datetime");
         document.getElementById("billBookingDatetime").textContent = this.getAttribute("data-booking-datetime");
         document.getElementById("billPickupLocation").textContent = this.getAttribute("data-pickup-location");
         document.getElementById("billDestination").textContent = this.getAttribute("data-destination");
@@ -82,6 +87,48 @@ document.querySelectorAll(".btn-viewBill").forEach(button => {
         document.getElementById("billDiscount").textContent = "LKR " + this.getAttribute("data-discount");
         document.getElementById("billFinalAmount").textContent = "LKR " + this.getAttribute("data-final-amount");
         document.getElementById("billPaymentStatus").textContent = this.getAttribute("data-payment-status");
+    });
+});
+
+document.getElementById("payBillButton").addEventListener("click", function () {
+    let billId = this.getAttribute("data-bill-id");	
+    let status = "PAID";
+
+    if (!billId) {
+        console.error("Bill ID not found!");
+        return;
+    }
+
+    console.log("Updating bill payment status with ID:", billId);
+
+    let urlEncodedData = new URLSearchParams();
+    urlEncodedData.append("billId", billId);
+    urlEncodedData.append("status", status);
+
+    fetch("customer?action=updateBillPaymentStatus", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: urlEncodedData.toString()
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log("Raw Response:", data);
+
+        try {
+            let jsonData = JSON.parse(data);
+            if (jsonData.success) {
+                showToast("Bill Payment Status Updated Successfully!", "bg-success");
+            } else {
+                showToast("Failed to Update Bill Payment Status", "bg-danger");
+            }
+        } catch (error) {
+            console.error("JSON Parsing Error:", error);
+            showToast("Invalid response from server", "bg-danger");
+        }
+    })
+    .catch(error => {
+        console.error("Fetch Error:", error);
+        showToast("An error occurred. Please try again.", "bg-danger");
     });
 });
 </script>

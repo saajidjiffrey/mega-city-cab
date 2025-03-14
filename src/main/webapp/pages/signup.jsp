@@ -8,7 +8,7 @@
 <div class="container my-5">
     <h1 class="fw-bold text-center mb-4">Sign Up as</h1>
 
-    <div class="card shadow-lg border-light">
+    <div class="card shadow-lg border-light mx-auto" style="max-width: 600px;">
         <div class="card-body p-5">
 
             <!-- Nav Tabs -->
@@ -28,42 +28,42 @@
                     <form action="user?action=customerSignup" method="post" class="requires-validation" id="customerSignUpForm" novalidate>
                         <div class="mb-4">
                             <label for="cName" class="form-label">Full Name</label>
-                            <input type="text" class="form-control form-control-lg" id="cName" placeholder="Full Name" name="cName" required>
+                            <input type="text" class="form-control form-control-sm" id="cName" placeholder="Full Name" name="cName" required>
                             <div class="invalid-feedback">Please enter your full name.</div>
                         </div>
                         <div class="mb-4">
                             <label for="cAddress" class="form-label">Address</label>
-                            <textarea class="form-control form-control-lg" id="cAddress" rows="4" name="cAddress" required></textarea>
+                            <textarea class="form-control form-control-sm" id="cAddress" rows="4" name="cAddress" required></textarea>
                             <div class="invalid-feedback">Please enter your address.</div>
                         </div>
                         <div class="mb-4">
                             <label for="cNIC" class="form-label">NIC</label>
-                            <input type="text" class="form-control form-control-lg" id="cNIC" placeholder="NIC Number" name="cNIC" required>
+                            <input type="text" class="form-control form-control-sm" id="cNIC" placeholder="NIC Number" name="cNIC" required>
                             <div class="invalid-feedback">Please enter your NIC number.</div>
                         </div>
                         <div class="mb-4">
                             <label for="cPhone" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control form-control-lg" id="cPhone" placeholder="Phone Number" name="cPhone" required pattern="\d{1,10}">
+                            <input type="tel" class="form-control form-control-sm" id="cPhone" placeholder="Phone Number" name="cPhone" required pattern="\d{1,10}">
                             <div class="invalid-feedback">Please enter a valid phone number.</div>
                         </div>
                         <div class="mb-4">
                             <label for="cEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control form-control-lg" id="cEmail" placeholder="Email Address" name="cEmail" required>
+                            <input type="email" class="form-control form-control-sm" id="cEmail" placeholder="Email Address" name="cEmail" required>
                             <div class="invalid-feedback">Please enter your email address.</div>
                         </div>
                         <div class="mb-4">
                             <label for="cUserName" class="form-label">User Name</label>
-                            <input type="text" class="form-control form-control-lg" id="cUserName" placeholder="User Name" name="cUserName" required>
+                            <input type="text" class="form-control form-control-sm" id="cUserName" placeholder="User Name" name="cUserName" required>
                             <div class="invalid-feedback">Please choose a user name.</div>
                         </div>
                         <div class="mb-4">
                             <label for="cPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control form-control-lg" id="cPassword" placeholder="Password" name="cPassword" required>
+                            <input type="password" class="form-control form-control-sm" id="cPassword" placeholder="Password" name="cPassword" required>
                             <div class="invalid-feedback">Please enter a password.</div>
                         </div>
                         <div class="mb-4">
                             <label for="cConfirmPassword" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control form-control-lg" id="cConfirmPassword" placeholder="Confirm Password" name="cConfirmPassword" required>
+                            <input type="password" class="form-control form-control-sm" id="cConfirmPassword" placeholder="Confirm Password" name="cConfirmPassword" required>
                             <div class="invalid-feedback">Please confirm your password.</div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-lg w-100">Sign Up</button>
@@ -75,47 +75,47 @@
                     <form action="user?action=driverSignup" method="post" class="requires-validation" id="driverSignUpForm" novalidate>
                         <div class="mb-4">
                             <label for="dName" class="form-label">Full Name</label>
-                            <input type="text" class="form-control form-control-lg" id="dName" placeholder="Full Name" name="dName" required>
+                            <input type="text" class="form-control form-control-sm" id="dName" placeholder="Full Name" name="dName" required>
                             <div class="invalid-feedback">Please enter your full name.</div>
                         </div>
                         <div class="mb-4">
                             <label for="dAddress" class="form-label">Address</label>
-                            <textarea class="form-control form-control-lg" id="dAddress" rows="4" name="dAddress" required></textarea>
+                            <textarea class="form-control form-control-sm" id="dAddress" rows="4" name="dAddress" required></textarea>
                             <div class="invalid-feedback">Please enter your address.</div>
                         </div>
                         <div class="mb-4">
                             <label for="dNIC" class="form-label">NIC</label>
-                            <input type="text" class="form-control form-control-lg" id="dNIC" placeholder="NIC Number" name="dNIC" required>
+                            <input type="text" class="form-control form-control-sm" id="dNIC" placeholder="NIC Number" name="dNIC" required>
                             <div class="invalid-feedback">Please enter your NIC number.</div>
                         </div>
                         <div class="mb-4">
                             <label for="dLicenseNo" class="form-label">License Number</label>
-                            <input type="text" class="form-control form-control-lg" id="dLicenseNo" placeholder="License Number" name="dLicenseNo" required>
+                            <input type="text" class="form-control form-control-sm" id="dLicenseNo" placeholder="License Number" name="dLicenseNo" required>
                             <div class="invalid-feedback">Please enter your license number.</div>
                         </div>
                         <div class="mb-4">
                             <label for="dPhone" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control form-control-lg" id="dPhone" placeholder="Phone Number" name="dPhone" required pattern="\d{1,10}">
+                            <input type="tel" class="form-control form-control-sm" id="dPhone" placeholder="Phone Number" name="dPhone" required pattern="\d{1,10}">
                             <div class="invalid-feedback">Please enter a valid phone number.</div>
                         </div>
                         <div class="mb-4">
                             <label for="dEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control form-control-lg" id="dEmail" placeholder="Email Address" name="dEmail" required>
+                            <input type="email" class="form-control form-control-sm" id="dEmail" placeholder="Email Address" name="dEmail" required>
                             <div class="invalid-feedback">Please enter your email address.</div>
                         </div>
                         <div class="mb-4">
                             <label for="dUserName" class="form-label">User Name</label>
-                            <input type="text" class="form-control form-control-lg" id="dUserName" placeholder="User Name" name="dUserName" required>
+                            <input type="text" class="form-control form-control-sm" id="dUserName" placeholder="User Name" name="dUserName" required>
                             <div class="invalid-feedback">Please choose a user name.</div>
                         </div>
                         <div class="mb-4">
                             <label for="dPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control form-control-lg" id="dPassword" placeholder="Password" name="dPassword" required>
+                            <input type="password" class="form-control form-control-sm" id="dPassword" placeholder="Password" name="dPassword" required>
                             <div class="invalid-feedback">Please enter a password.</div>
                         </div>
                         <div class="mb-4">
                             <label for="dConfirmPassword" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control form-control-lg" id="dConfirmPassword" placeholder="Confirm Password" name="dConfirmPassword" required>
+                            <input type="password" class="form-control form-control-sm" id="dConfirmPassword" placeholder="Confirm Password" name="dConfirmPassword" required>
                             <div class="invalid-feedback">Please confirm your password.</div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-lg w-100">Sign Up</button>

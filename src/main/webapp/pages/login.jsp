@@ -8,18 +8,18 @@
 <div class="container my-5">
     <h1 class="fw-bold text-center mb-4">Login</h1>
 
-    <div class="card shadow-lg border-light">
+    <div class="card shadow-lg border-light mx-auto" style="max-width: 600px;">
         <div class="card-body p-5">
             <form action="user?action=userLogin" method="post" class="requires-validation" id="loginForm" novalidate>
                 <div class="mb-4">
                     <label for="userName" class="form-label fw-semibold">User Name</label>
-                    <input type="text" class="form-control form-control-lg" id="userName" placeholder="Enter your username" name="userName" required>
+                    <input type="text" class="form-control form-control-sm" id="userName" placeholder="Enter your username" name="userName" required>
                     <div class="invalid-feedback">Please enter your username.</div>
                 </div>
 
                 <div class="mb-4">
                     <label for="password" class="form-label fw-semibold">Password</label>
-                    <input type="password" class="form-control form-control-lg" id="password" placeholder="Enter your password" name="password" required>
+                    <input type="password" class="form-control form-control-sm" id="password" placeholder="Enter your password" name="password" required>
                     <div class="invalid-feedback">Please enter your password.</div>
                 </div>
 

@@ -18,6 +18,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mega_city_cab.model.Booking;
 import com.mega_city_cab.model.Customer;
 import com.mega_city_cab.model.Vehicle;
+import com.mega_city_cab.service.BillService;
 import com.mega_city_cab.service.BookingService;
 import com.mega_city_cab.service.VehicleService;
 
@@ -29,6 +30,7 @@ public class CustomerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private VehicleService vehicleService;   
 	private BookingService bookingService;   
+	private BillService billService;   
 	ObjectMapper objectMapper;
 	
     /**
@@ -38,6 +40,7 @@ public class CustomerController extends HttpServlet {
 	public void init() throws ServletException {
 		vehicleService = VehicleService.getInstance();
 		bookingService = BookingService.getInstance();
+		billService = BillService.getInstance();
 		objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
     }
@@ -78,6 +81,8 @@ public class CustomerController extends HttpServlet {
         	createBooking(request, response);
         } else if (action.equals("deleteBooking")) {
         	deleteBooking(request, response);
+        } else if (action.equals("updateBillPaymentStatus")) {
+        	updateBillPaymentStatus(request, response);
         }
 	}
 	
@@ -196,6 +201,41 @@ public class CustomerController extends HttpServlet {
 	        String errorResponse = "{\"success\": false, \"message\": \"Failed to delete booking. Please try again!\"}";
 	        response.getWriter().write(errorResponse);
 	    } 
+	}
+	
+	private void updateBillPaymentStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+
+	    try {
+	        int billId = Integer.parseInt(request.getParameter("billId"));
+	        String status = request.getParameter("status");
+
+	        // Ensure that billId and status are not null or empty
+	        if (billId <= 0 || status == null || status.isEmpty()) {
+	            throw new Exception("Invalid parameters.");
+	        }
+
+	        // Call the service to update the bill payment status
+	        boolean success = billService.updateBillPaymentStatus(billId, status);
+
+	        // Prepare JSON response
+	        String jsonResponse = success
+	                ? "{\"success\": true, \"message\": \"Bill payment status updated successfully!\"}"
+	                : "{\"success\": false, \"message\": \"Failed to update bill payment status.\"}";
+
+	        response.getWriter().write(jsonResponse);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+
+	        // Prepare error response
+	        String errorResponse = "{\"success\": false, \"message\": \"" + e.getMessage() + "\"}";
+	        response.getWriter().write(errorResponse);
+	    } finally {
+	        response.getWriter().flush();
+	        response.getWriter().close();
+	    }
 	}
 
 }

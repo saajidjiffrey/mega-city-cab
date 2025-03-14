@@ -17,8 +17,7 @@
 				<a href="#" class="btn" id="menu-toggle"><i class="bi bi-list"></i></a>
 			</div>
 			<div class="container mx-auto ">
-				<h1 class="my-3">Completed Orders</h1>
-
+				<h1 class="my-4 text-center text-primary">Completed Orders</h1>
 				<div class="card">
 					<div class="card-body">
 						<table class="table table-striped table-hover">

@@ -12,8 +12,8 @@
 		</div>
 
 		<div class="col text-end">
-			<a type="button" class="btn btn-outline-primary me-2" href="driver?action=showDriverDashboard">Driver Dashboard</a>
-			<a type="button" class="btn btn-outline-primary me-2" href="customer?action=showCustomerDashboard">Customer Dashboard</a>
+<!-- 			<a type="button" class="btn btn-outline-primary me-2" href="driver?action=showDriverDashboard">Driver Dashboard</a> -->
+<!-- 			<a type="button" class="btn btn-outline-primary me-2" href="customer?action=showCustomerDashboard">Customer Dashboard</a> -->
 			<a type="button" class="btn btn-outline-secondary me-2" href="user?action=login">Login</a>
 			<a type="button" class="btn btn-primary" href="user?action=signup">Sign-up</a>
 		</div>
@@ -31,7 +31,7 @@
 	</div>
 	<div class="carousel-inner">
 		<div class="carousel-item active carousel-item-start">
-			<img alt="logo" src="common/images/slider1.jpg">
+			<img class="img-fluid" alt="logo" src="common/images/slider1.jpg">
 			<div class="container">
 				<div class="carousel-caption text-start">
 					<h1>Ride with Comfort & Safety</h1>
@@ -44,7 +44,7 @@
 			</div>
 		</div>
 		<div class="carousel-item carousel-item-next carousel-item-start">
-			<img alt="logo" src="common/images/slider2.jpg">
+			<img class="img-fluid" alt="logo" src="common/images/slider2.jpg">
 			<div class="container">
 				<div class="carousel-caption">
 					<h1>Book a Ride Anytime, Anywhere</h1>
@@ -53,7 +53,7 @@
 			</div>
 		</div>
 		<div class="carousel-item">
-			<img alt="logo" src="common/images/slider3.jpg">
+			<img class="img-fluid" alt="logo" src="common/images/slider3.jpg">
 			<div class="container">
 				<div class="carousel-caption text-end">
 					<h1>Trusted by Thousands of Riders</h1>
@@ -82,7 +82,7 @@
 
 	<div class="row">
     <div class="col-lg-4">
-		<img alt="logo" src="common/images/home1.jpg" style="width:180px; height: 180px; border-radius: 120px;">
+		<img  alt="logo" src="common/images/home1.jpg" style="width:180px; height: 180px; border-radius: 120px;">
         <h2 class="fw-normal">Affordable Rides</h2>
         <p>Enjoy budget-friendly fares without compromising on comfort and safety. Get the best value for your trips across the city.</p>
     </div>
@@ -113,7 +113,7 @@
         </p>
     </div>
     <div class="col-md-5 order-md-1">
-	<img alt="logo" src="common/images/home4.jpg" class="w-100 object-fit-cover " style="height: 500px;">
+	<img alt="logo" src="common/images/home4.jpg" class="w-100 object-fit-cover img-fluid rounded"  style="height: 500px;">
     </div>
 </div>
 
@@ -130,7 +130,7 @@
         </p>
     </div>
     <div class="col-md-5 order-md-1">
-        <img alt="logo" src="common/images/home5.jpg" class="w-100 object-fit-cover" style="height: 500px;">
+        <img alt="logo" src="common/images/home5.jpg" class="w-100 object-fit-cover img-fluid rounded" style="height: 500px;">
     </div>
 </div>
 
@@ -146,7 +146,7 @@
         </p>
     </div>
     <div class="col-md-5">
-        <img alt="logo" src="common/images/home6.jpg" class="w-100 object-fit-cover" style="height: 500px;">
+        <img alt="logo" src="common/images/home6.jpg" class="w-100 object-fit-cover img-fluid rounded" style="height: 500px;">
     </div>
 </div>
 

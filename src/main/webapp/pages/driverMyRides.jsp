@@ -19,8 +19,7 @@
 				<a href="#" class="btn" id="menu-toggle"><i class="bi bi-list"></i></a>
 			</div>
 			<div class="container mx-auto ">
-				<h1 class="my-3">My Rides</h1>
-
+				<h1 class="my-4 text-center text-primary">My Rides</h1>
 				<div class="card">
 					<div class="card-body">
 						<table class="table table-striped table-hover">
@@ -53,7 +52,8 @@
 												<td><span class="badge bg-info status">Accepted</span></td>
 											</c:when>
 											<c:when test="${booking.status eq 'onride'}">
-												<td><span class="badge bg-warning status">On Ride</span></td>
+												<td><span class="badge bg-warning status">On
+														Ride</span></td>
 											</c:when>
 											<c:when test="${booking.status eq 'cancelled'}">
 												<td><span class="badge bg-danger status">Cancelled</span></td>
@@ -65,26 +65,20 @@
 												<td><span class="badge bg-secondary status">Unknown</span></td>
 											</c:otherwise>
 										</c:choose>
-												<td><c:if test="${booking.status eq 'accepted'}">
-													<button type="button"
-														class="btn btn-primary btn-startBooking"
-														booking-id="${booking.bookingId}">
-														Start Ride
-													</button>
-													</c:if>
-												</td>
-												<td><c:if test="${booking.status eq 'onride'}">
-													<button type="button"
-														class="btn btn-success btn-completeBooking"
-														booking-id="${booking.bookingId}"
-														booking-distance="${booking.distance}"
-														booking-customerId="${booking.customerId}"
-														booking-vehicleId="${booking.vehicleId}"
-														>
-														Complete Ride
-													</button>
-													</c:if>
-												</td>
+										<td><c:if test="${booking.status eq 'accepted'}">
+												<button type="button"
+													class="btn btn-primary btn-startBooking"
+													booking-id="${booking.bookingId}">Start Ride</button>
+											</c:if></td>
+										<td><c:if test="${booking.status eq 'onride'}">
+												<button type="button"
+													class="btn btn-success btn-completeBooking"
+													booking-id="${booking.bookingId}"
+													booking-distance="${booking.distance}"
+													booking-customerId="${booking.customerId}"
+													booking-vehicleId="${booking.vehicleId}">
+													Complete Ride</button>
+											</c:if></td>
 									</tr>
 								</c:forEach>
 							</tbody>
